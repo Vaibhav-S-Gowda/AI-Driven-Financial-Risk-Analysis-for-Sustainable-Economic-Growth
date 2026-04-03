@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In — FinRisk AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- CSS_INJECTION_HOOK -->
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-brand" onclick="navigateTo('landing')">
+            <div class="logo-icon">◈</div>
+            FinRisk AI
+        </div>
+        <div class="nav-actions">
+            <button class="btn-outline" onclick="navigateTo('landing')">← Back to Home</button>
+        </div>
+    </nav>
+
+    <!-- SIGN-IN LAYOUT -->
+    <div class="page-wrapper">
+
+        <!-- LEFT: Visual Panel -->
+        <div class="visual-panel">
+            <div class="visual-grid"></div>
+            <div class="visual-logo">
+                <div class="logo-mark">◈</div>
+                FinRisk AI
+            </div>
+            <div class="visual-stats">
+                <div class="v-stat">
+                    <div class="v-stat-val">94.2%</div>
+                    <div class="v-stat-lbl"><span class="v-stat-dot"></span>Model Accuracy</div>
+                </div>
+                <div class="v-stat">
+                    <div class="v-stat-val">10M</div>
+                    <div class="v-stat-lbl"><span class="v-stat-dot"></span>Parameters</div>
+                </div>
+                <div class="v-stat">
+                    <div class="v-stat-val">214</div>
+                    <div class="v-stat-lbl"><span class="v-stat-dot"></span>ESG Economies</div>
+                </div>
+                <div class="v-stat">
+                    <div class="v-stat-val">12ms</div>
+                    <div class="v-stat-lbl"><span class="v-stat-dot"></span>Latency</div>
+                </div>
+            </div>
+            <div class="visual-quote">
+                <strong>Risk intelligence, in real time.</strong>
+                Three AI engines — Regression, Classification, and Clustering — working in unison to surface what matters most.
+            </div>
+        </div>
+
+        <!-- RIGHT: Form Panel -->
+        <div class="form-panel">
+            <div class="form-card">
+                <div class="form-eyebrow">Secure Access</div>
+                <h1 class="form-title">Welcome back,<br><span>sign in to continue</span></h1>
+                <p class="form-subtitle">Access your AI-powered risk analysis dashboard and real-time financial intelligence.</p>
+
+                <div class="field-group">
+                    <label class="field-label" for="email">Email address</label>
+                    <input id="email" class="field-input" type="email" placeholder="analyst@finrisk.ai">
+                </div>
+
+                <div class="field-group">
+                    <div class="field-row">
+                        <label class="field-label" for="password" style="margin-bottom:0;">Password</label>
+                        <span class="forgot-link">Forgot password?</span>
+                    </div>
+                    <input id="password" class="field-input" type="password" placeholder="••••••••" style="margin-top:0.5rem;">
+                </div>
+
+                <button class="btn-signin" id="signin-btn" onclick="handleSignIn()">
+                    <div class="spinner"></div>
+                    <span class="btn-text">Sign in to Dashboard</span>
+                    <span class="arrow">→</span>
+                </button>
+
+                <div class="divider"><span>or continue with</span></div>
+
+                <button class="btn-google">
+                    <span class="google-icon">G</span>
+                    Sign in with Google
+                </button>
+
+                <p class="signup-prompt">
+                    Don't have an account? <a href="#">Request access</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JS_INJECTION_HOOK -->
+
+</body>
+</html>
