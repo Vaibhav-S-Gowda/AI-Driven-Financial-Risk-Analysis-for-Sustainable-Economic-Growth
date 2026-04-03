@@ -1,0 +1,93 @@
+
+==================== credit_risk_dataset.csv ====================
+Shape: (32581, 12)
+
+Columns:
+['person_age', 'person_income', 'person_home_ownership', 'person_emp_length', 'loan_intent', 'loan_grade', 'loan_amnt', 'loan_int_rate', 'loan_status', 'loan_percent_income', 'cb_person_default_on_file', 'cb_person_cred_hist_length']
+
+Data Types:
+person_age                      int64
+person_income                   int64
+person_home_ownership          object
+person_emp_length             float64
+loan_intent                    object
+loan_grade                     object
+loan_amnt                       int64
+loan_int_rate                 float64
+loan_status                     int64
+loan_percent_income           float64
+cb_person_default_on_file      object
+cb_person_cred_hist_length      int64
+dtype: object
+
+First 5 rows:
+   person_age  ...  cb_person_cred_hist_length
+0          22  ...                           3
+1          21  ...                           2
+2          25  ...                           3
+3          23  ...                           2
+4          24  ...                           4
+
+[5 rows x 12 columns]
+
+Value counts for loan_status (Classification target):
+loan_status
+0    25473
+1     7108
+Name: count, dtype: int64
+
+==================== financial_dataset.csv ====================
+Shape: (1000, 6)
+
+Columns:
+['Income', 'Credit Score', 'Spending Score', 'Transaction Count', 'Savings Ratio', 'Loan Default Risk']
+
+Data Types:
+Income               float64
+Credit Score         float64
+Spending Score       float64
+Transaction Count      int64
+Savings Ratio        float64
+Loan Default Risk      int64
+dtype: object
+
+First 5 rows:
+         Income  ...  Loan Default Risk
+0  28099.701362  ...                  1
+1  34807.186154  ...                  0
+2  47118.500803  ...                  0
+3  33222.701245  ...                  1
+4  45671.726988  ...                  0
+
+[5 rows x 6 columns]
+
+==================== esgdata_download-2026-01-09.xlsx ====================
+Sheets: ['Cover', 'Framework', 'Metadata', 'Data']
+Shape: (34208, 70)
+
+Columns:
+['ISO3 code', 'Economy', 'Indicator code', 'Indicator name', '1960', '1961', '1962', '1963', '1964', '1965', '1966', '1967', '1968', '1969', '1970', '1971', '1972', '1973', '1974', '1975', '1976', '1977', '1978', '1979', '1980', '1981', '1982', '1983', '1984', '1985', '1986', '1987', '1988', '1989', '1990', '1991', '1992', '1993', '1994', '1995', '1996', '1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025']
+
+Data Types:
+ISO3 code          object
+Economy            object
+Indicator code     object
+Indicator name     object
+1960              float64
+                   ...   
+2021              float64
+2022              float64
+2023              float64
+2024              float64
+2025              float64
+Length: 70, dtype: object
+
+First 5 rows:
+  ISO3 code  ... 2025
+0       ABW  ...  NaN
+1       AFG  ...  NaN
+2       AGO  ...  NaN
+3       ALB  ...  NaN
+4       AND  ...  NaN
+
+[5 rows x 70 columns]
