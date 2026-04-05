@@ -1,6 +1,6 @@
 // ── Navigation (works inside Streamlit iframe sandbox) ──
     function navigateTo(page) {
-        if (page === 'signin' || page === 'login') {
+        if (page === 'signin' || page === 'login' || page === 'sign in') {
             // Bulletproof navigation: Click the hidden Streamlit button in the parent window.
             // Streamlit wraps custom HTML in sandboxes that block window.top navigation,
             // but since it's same-origin, we can still query Selector the main parent DOM!
