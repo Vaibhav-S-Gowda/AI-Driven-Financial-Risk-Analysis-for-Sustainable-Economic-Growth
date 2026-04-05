@@ -205,8 +205,8 @@
             <a href="#contact">Contact</a>
         </div>
         <div class="nav-actions">
-            <button class="btn-outline">Sign in</button>
-            <button class="btn-primary">Get in touch</button>
+            <button class="btn-outline" onclick="navigateTo('signin')">Sign in</button>
+            <button class="btn-primary" onclick="navigateTo('contact')">Get in touch</button>
         </div>
     </nav>
 
@@ -307,7 +307,7 @@
         <section class="split-section reveal-up">
             <div>
                 <h2 class="split-title reveal-up">Trusted service, <span>for your<br>various needs</span></h2>
-                <button class="btn-primary reveal-up reveal-delay-1">Get in touch ↗</button>
+                <button class="btn-primary reveal-up reveal-delay-1" onclick="navigateTo('contact')">Get in touch ↗</button>
                 <div class="split-mini-grid reveal-up reveal-delay-2">
                     <div class="mini-card">
                         <div class="mini-card-num">01</div>
@@ -342,7 +342,7 @@
                     <div class="testi-quote">"We have used models from FinRisk for most of our analysis. This is our
                         strategic step to continue to increase the accuracy of default prediction for our portfolio. We
                         are very satisfied with the services."</div>
-                    <button class="btn-primary">View case study</button>
+                    <button class="btn-primary" onclick="navigateTo('signin')">View case study</button>
                     <div class="testi-author">Jeniffer Kolobaly <span>— CTO EV Medtronic</span></div>
                 </div>
                 <div class="split-image-ph reveal-scale reveal-delay-2" style="height:400px;"></div>
@@ -364,7 +364,7 @@
             <div class="footer-right reveal-up reveal-delay-2">
                 <p>By increasing the effectiveness and efficiency of financial analysis, the use of predictive
                     intelligence is highly profitable for all institutions.</p>
-                <a href="#" class="btn-white">Get in touch ↗</a>
+                <a href="#contact" class="btn-white">Get in touch ↗</a>
             </div>
         </div>
         <div class="footer-bottom">
@@ -381,9 +381,29 @@
                 if (e.isIntersecting) e.target.classList.add('is-visible');
             });
         }, { threshold: 0.1 });
-
         document.querySelectorAll('.reveal-up, .reveal-scale').forEach(el => observer.observe(el));
+
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.reveal-up, .reveal-scale').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight) el.classList.add('is-visible');
+            });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (!href || href === '#') return;
+                const target = document.querySelector(href);
+                if (!target) return;
+                e.preventDefault();
+                const navHeight = document.querySelector('.navbar').offsetHeight;
+                const top = target.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+                window.scrollTo({ top, behavior: 'smooth' });
+            });
+        });
     </script>
+    <!-- JS_INJECTION_HOOK -->
 
 </body>
 </html>
