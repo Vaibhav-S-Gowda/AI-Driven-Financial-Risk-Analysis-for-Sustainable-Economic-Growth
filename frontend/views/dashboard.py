@@ -9,12 +9,6 @@ Responsibilities:
     nothing hardcoded.
   • Buttons work: BACKEND_URL is cleared so the JS GBM engine runs
     immediately with a 2-second abort-timeout guard on any fetch attempt.
-
-Folder layout expected:
-  frontend/
-  ├── dashboard.html
-  └── views/
-      └── dashboard.py   ← this file
 """
 
 from __future__ import annotations
@@ -160,6 +154,12 @@ def _render_html_dashboard() -> None:
         [data-testid="stHeader"]           { display: none !important; }
         footer                             { display: none !important; }
         #MainMenu                          { visibility: hidden !important; }
+        /* Kill any dark/black Streamlit backgrounds */
+        html, body, .stApp,
+        [data-testid="stAppViewContainer"],
+        [data-testid="stMain"],
+        .main                              { background: #EBF0F6 !important;
+                                             background-color: #EBF0F6 !important; }
         .main .block-container,
         .stMainBlockContainer,
         section.main > div                 { padding: 0 !important;
@@ -206,10 +206,9 @@ def _render_html_dashboard() -> None:
     })();
     /* ─────────────────────────────────────────────────────────────────────── */
     """
-    # Insert right after the opening <script> tag of the main script block
-    html = html.replace("<script>\n/* ═══", abort_patch + "\n<script>\n/* ═══", 1)
-    if abort_patch not in html:                     # fallback: first <script>
-        html = html.replace("<script>", "<script>\n" + abort_patch, 1)
+    # ── 4. Patch: add fetch AbortController timeout (prevents button freeze) ──
+    # Target only the first script tag that DOES NOT have a src attribute
+    html = re.sub(r"<(script)(?![^>]*src\s*=)[^>]*>", r"<\1>\n" + abort_patch, html, count=1, flags=re.IGNORECASE)
 
     # ── 5. Inject full-screen JS that fixes the parent Streamlit document ─────
     fullscreen_js = """
@@ -220,7 +219,7 @@ def _render_html_dashboard() -> None:
         try {
             var pd = window.parent.document;
 
-            /* Kill Streamlit chrome in the parent */
+            /* Kill Streamlit chrome in the parent + force background to match dashboard */
             var s = pd.getElementById('fr-fs-css');
             if (!s) {
                 s = pd.createElement('style');
@@ -232,6 +231,10 @@ def _render_html_dashboard() -> None:
                 '[data-testid="stHeader"]{display:none!important}' +
                 'footer{display:none!important}' +
                 '#MainMenu{visibility:hidden!important}' +
+                /* Force parent body/app background to match the dashboard colour */
+                'html,body{background:#EBF0F6!important;overflow:hidden!important;margin:0!important;padding:0!important}' +
+                '.stApp,[data-testid="stAppViewContainer"],[data-testid="stMain"]' +
+                '{background:#EBF0F6!important;background-color:#EBF0F6!important}' +
                 '.main .block-container{padding:0!important;max-width:100%!important;margin:0!important}' +
                 '.stMainBlockContainer{padding:0!important}' +
                 'section.main>div{padding:0!important}';
@@ -239,12 +242,23 @@ def _render_html_dashboard() -> None:
             /* Find THIS iframe and stretch it to 100 vh/vw */
             var frames = pd.querySelectorAll('iframe');
             for (var i = 0; i < frames.length; i++) {
-                if (frames[i].contentWindow === window) {
-                    frames[i].style.cssText =
-                        'position:fixed;top:0;left:0;' +
-                        'width:100vw;height:100vh;' +
-                        'border:none;z-index:99999;';
-                }
+                try {
+                    if (frames[i].contentWindow === window) {
+                        frames[i].style.cssText =
+                            'position:fixed;top:0;left:0;' +
+                            'width:100vw;height:100vh;' +
+                            'border:none;z-index:99999;' +
+                            'background:#EBF0F6;';
+                        /* Also fix the iframe's wrapper element */
+                        var wrapper = frames[i].parentElement;
+                        if (wrapper) {
+                            wrapper.style.cssText =
+                                'position:fixed;top:0;left:0;' +
+                                'width:100vw;height:100vh;' +
+                                'overflow:visible;z-index:99999;';
+                        }
+                    }
+                } catch(ie) { /* skip cross-origin frames */ }
             }
         } catch (e) {
             console.warn('[FinRisk] Fullscreen patch error:', e);
@@ -253,7 +267,7 @@ def _render_html_dashboard() -> None:
 
     /* Run immediately, then retry as Streamlit hydrates asynchronously */
     fix();
-    [100, 400, 900, 1800].forEach(function(ms) { setTimeout(fix, ms); });
+    [100, 400, 900, 1800, 3000].forEach(function(ms) { setTimeout(fix, ms); });
 
     /* Also re-apply whenever the parent URL changes (tab navigation) */
     try {
@@ -265,8 +279,9 @@ def _render_html_dashboard() -> None:
     html = html.replace("</body>", fullscreen_js + "\n</body>")
 
     # ── 6. Render ─────────────────────────────────────────────────────────────
-    # height=900 is a floor; the JS above overrides it to 100vh via position:fixed
-    components.html(html, height=900, scrolling=False)
+    # height=1200 is a generous floor; the JS above overrides it to 100vh via position:fixed.
+    # scrolling=True ensures content is reachable even if the fullscreen JS hasn't fired yet.
+    components.html(html, height=1200, scrolling=True)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
