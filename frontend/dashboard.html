@@ -694,6 +694,69 @@ body {
   border-radius: 2px;
   display: block;
 }
+
+/* Click feedback for nav */
+.nav-item { cursor: pointer; }
+.nav-item:active { transform: scale(0.9); }
+
+/* Section animations */
+.dash-section {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  animation: fadein 0.4s ease forwards;
+}
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* SaaS-style card used by new sections */
+.saas-card {
+  background: var(--card);
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  padding: 22px 24px;
+}
+.saas-card:hover { box-shadow: var(--shadow-md); }
+
+/* Results Interpretation */
+.interp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.interp-item {
+  padding: 16px;
+  border-radius: var(--r-sm);
+  background: var(--bg);
+  border-left: 3px solid var(--green);
+  transition: var(--transition);
+}
+.interp-item:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-1px);
+}
+.interp-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-2);
+  margin-bottom: 6px;
+}
+.interp-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+  letter-spacing: -0.3px;
+}
+.interp-desc {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
 </style>
 </head>
 
@@ -702,27 +765,22 @@ body {
 <aside class="sidebar">
   <div class="sidebar-logo">◈</div>
 
-  <div class="nav-item active" data-tip="Dashboard">
+  <div class="nav-item active" data-tip="Monte Carlo Sim" onclick="switchSection('simulation',this)">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-  </div>
-  <div class="nav-item" data-tip="Simulation">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
     <div class="nav-dot"></div>
   </div>
-  <div class="nav-item" data-tip="Portfolio">
+  <div class="nav-item" data-tip="Credit Risk" onclick="switchSection('credit',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+  </div>
+  <div class="nav-item" data-tip="ESG Intelligence" onclick="switchSection('esg',this)">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
   </div>
-  <div class="nav-item" data-tip="Analytics">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+  <div class="nav-item" data-tip="Clustering Lab" onclick="switchSection('clustering',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="7.5" cy="7.5" r="2.5"/><circle cx="16.5" cy="7.5" r="2.5"/><circle cx="12" cy="16" r="2.5"/><circle cx="4" cy="15" r="1.5"/><circle cx="20" cy="15" r="1.5"/></svg>
   </div>
-  <div class="nav-item" data-tip="Reports">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-  </div>
-  <div class="nav-item" data-tip="Team">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-  </div>
-  <div class="nav-item" data-tip="Messages">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+
+  <div class="nav-item" data-tip="Overview" onclick="switchSection('overview',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
   </div>
 
   <div class="sidebar-spacer"></div>
@@ -730,7 +788,7 @@ body {
   <div class="nav-item" data-tip="Settings">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
   </div>
-  <div class="sidebar-avatar">AJ</div>
+  <div class="sidebar-avatar" id="userAvatar">G</div>
 </aside>
 
 <!-- ═══ SHELL ══════════════════════════════════════════════════════════════ -->
@@ -739,6 +797,233 @@ body {
 <!-- ─── MAIN CONTENT ──────────────────────────────────────────────────── -->
 <main class="main" id="mainContent">
 
+<!-- ════ SECTION: OVERVIEW ══════════════════════════════════════════ -->
+<div id="section-overview" class="dash-section" style="display:none">
+  <header class="header fade-up">
+    <div class="header-left">
+      <h1>📊 Platform Overview</h1>
+      <p id="ovDate">Loading…</p>
+    </div>
+  </header>
+  <div class="stat-row">
+    <div class="stat-card fade-up fade-up-1">
+      <div class="stat-card-top"><div class="stat-icon" style="background:#EFF6FF"><svg viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div></div>
+      <div class="stat-value" id="ovAssets">$0.00B</div>
+      <div class="stat-label">Total Assets Under Analysis</div>
+    </div>
+    <div class="stat-card fade-up fade-up-2">
+      <div class="stat-card-top"><div class="stat-icon" style="background:#ECFDF5"><svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg></div></div>
+      <div class="stat-value" id="ovESG">0.0</div>
+      <div class="stat-label">Avg ESG Score</div>
+    </div>
+    <div class="stat-card fade-up fade-up-3">
+      <div class="stat-card-top"><div class="stat-icon" style="background:#F3E8FF"><svg viewBox="0 0 24 24" fill="none" stroke="#7c6cf0" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div></div>
+      <div class="stat-value" id="ovEntities">0</div>
+      <div class="stat-label">Financial Entities</div>
+    </div>
+    <div class="stat-card fade-up fade-up-4">
+      <div class="stat-card-top"><div class="stat-icon" style="background:#FEF3C7"><svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg></div></div>
+      <div class="stat-value" id="ovESGcount">0</div>
+      <div class="stat-label">ESG Data Points</div>
+    </div>
+  </div>
+
+  <!-- Model Summary -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px" class="fade-up">
+    <div class="saas-card">
+      <div class="card-title" style="margin-bottom:12px">🔮 Regression Model</div>
+      <div style="font-size:20px;font-weight:700;color:var(--text)" id="ovRegName">—</div>
+      <div style="font-size:13px;color:var(--text-2);margin-top:4px" id="ovR2">R² = —</div>
+    </div>
+    <div class="saas-card">
+      <div class="card-title" style="margin-bottom:12px">🛡️ Classification Model</div>
+      <div style="font-size:20px;font-weight:700;color:var(--text)" id="ovClsName">—</div>
+      <div style="font-size:13px;color:var(--text-2);margin-top:4px" id="ovAUC">AUC = —</div>
+    </div>
+    <div class="saas-card">
+      <div class="card-title" style="margin-bottom:12px">🧬 Clustering Model</div>
+      <div style="font-size:20px;font-weight:700;color:var(--text)" id="ovCluName">—</div>
+      <div style="font-size:13px;color:var(--text-2);margin-top:4px" id="ovClusters">— segments</div>
+    </div>
+  </div>
+
+  <!-- Sector Distribution -->
+  <div class="saas-card fade-up">
+    <div class="card-header"><div class="card-title">🏢 Sector Distribution</div></div>
+    <div style="height:280px;position:relative;"><canvas id="sectorChart"></canvas></div>
+  </div>
+</div>
+
+<!-- ════ SECTION: CREDIT RISK ══════════════════════════════════════════ -->
+<div id="section-credit" class="dash-section" style="display:none">
+  <header class="header fade-up">
+    <div class="header-left">
+      <h1>🛡️ Credit Risk Analysis</h1>
+      <p>Loan Default Detection &amp; Feature Impact</p>
+    </div>
+  </header>
+  <div class="stat-row">
+    <div class="stat-card fade-up fade-up-1">
+      <div class="stat-card-top"><div class="stat-icon" style="background:#ECFDF5"><svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="1.8"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg></div></div>
+      <div class="stat-value" id="crAUC">—</div>
+      <div class="stat-label">AUC Score</div>
+    </div>
+    <div class="stat-card fade-up fade-up-2">
+      <div class="stat-card-top"><div class="stat-icon" style="background:#FEF2F2"><svg viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="1.8"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg></div></div>
+      <div class="stat-value" id="crHighRisk">0</div>
+      <div class="stat-label">High-Risk Entities</div>
+    </div>
+    <div class="stat-card fade-up fade-up-3">
+      <div class="stat-card-top"><div class="stat-icon" style="background:#EFF6FF"><svg viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div></div>
+      <div class="stat-value" id="crTotal">0</div>
+      <div class="stat-label">Total Applicants</div>
+    </div>
+    <div class="stat-card fade-up fade-up-4">
+      <div class="stat-card-top"><div class="stat-icon" style="background:#F3E8FF"><svg viewBox="0 0 24 24" fill="none" stroke="#7c6cf0" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15 ..."/></svg></div></div>
+      <div class="stat-value" id="crModel">—</div>
+      <div class="stat-label">Model Used</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px" class="fade-up">
+    <div class="saas-card">
+      <div class="card-header"><div class="card-title">📊 Feature Importance</div></div>
+      <div style="height:260px;position:relative;"><canvas id="featureChart"></canvas></div>
+    </div>
+    <div class="saas-card">
+      <div class="card-header"><div class="card-title">⚠️ Risk Breakdown</div></div>
+      <div id="crBreakdown">
+        <div class="insight-item" style="margin-bottom:10px">
+          <div class="insight-icon" style="background:#FEF2F2">⚠️</div>
+          <div><div class="insight-text">Run classification model to generate risk breakdown.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ SECTION: ESG ══════════════════════════════════════════ -->
+<div id="section-esg" class="dash-section" style="display:none">
+  <header class="header fade-up">
+    <div class="header-left">
+      <h1>🌍 ESG Sustainability Lab</h1>
+      <p id="esgDataContext">Loading ESG intelligence…</p>
+    </div>
+  </header>
+  <div class="stat-row">
+    <div class="stat-card fade-up fade-up-1">
+      <div class="stat-card-top"><div class="stat-icon" style="background:#ECFDF5"><svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/></svg></div></div>
+      <div class="stat-value" id="esgScore">0.0</div>
+      <div class="stat-label">Composite ESG Score</div>
+    </div>
+    <div class="stat-card fade-up fade-up-2">
+      <div class="stat-card-top"><div class="stat-icon" style="background:#EFF6FF"><svg viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg></div></div>
+      <div class="stat-value" id="esgEnv">0%</div>
+      <div class="stat-label">Environment</div>
+    </div>
+    <div class="stat-card fade-up fade-up-3">
+      <div class="stat-card-top"><div class="stat-icon" style="background:#F3E8FF"><svg viewBox="0 0 24 24" fill="none" stroke="#7c6cf0" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div></div>
+      <div class="stat-value" id="esgSoc">0%</div>
+      <div class="stat-label">Social</div>
+    </div>
+    <div class="stat-card fade-up fade-up-4">
+      <div class="stat-card-top"><div class="stat-icon" style="background:#FEF3C7"><svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div></div>
+      <div class="stat-value" id="esgGov">0%</div>
+      <div class="stat-label">Governance</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:26px;" class="fade-up">
+    <!-- Trend -->
+    <div class="saas-card" style="grid-column: span 2;">
+      <div class="card-header"><div class="card-title">📈 Corporate ESG Score Trend</div></div>
+      <div style="height:220px;position:relative;margin-top:10px"><canvas id="esgTrendChart"></canvas></div>
+    </div>
+
+    <!-- Mini Insights -->
+    <div class="saas-card" style="display:flex;flex-direction:column;">
+      <div class="card-header"><div class="card-title">💡 Key Insights</div></div>
+      <div id="esgInsightsList" style="margin-top:16px;display:flex;flex-direction:column;gap:12px;flex:1;">
+         <p style="color:var(--text-2);font-size:13px;">Loading intelligence...</p>
+      </div>
+    </div>
+
+    <!-- Sub-Metrics Block -->
+    <div class="saas-card" style="grid-column: span 2;">
+      <div class="card-header"><div class="card-title">📊 Deep-Dive Core Sub-Metrics</div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-top:16px;">
+         <div style="background:#F9FAFB;padding:16px;border-radius:12px;">
+            <div style="font-weight:700;color:#10B981;margin-bottom:12px;font-size:14px;letter-spacing:-0.2px">Environment</div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;"><span style="color:var(--text-2);font-weight:500;">Energy (TOE/k)</span><strong id="envCarbon">—</strong></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;"><span style="color:var(--text-2);font-weight:500;">Energy per Capita</span><strong id="envEnergy">—</strong></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--text-2);font-weight:500;">Electricity Access</span><strong id="envWater">—</strong></div>
+         </div>
+         <div style="background:#F9FAFB;padding:16px;border-radius:12px;">
+            <div style="font-weight:700;color:#7c6cf0;margin-bottom:12px;font-size:14px;letter-spacing:-0.2px">Social</div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;"><span style="color:var(--text-2);font-weight:500;">Unemployment Rate</span><strong id="socTurnover">—</strong></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;"><span style="color:var(--text-2);font-weight:500;">Internet Access</span><strong id="socDiversity">—</strong></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--text-2);font-weight:500;">Electricity Access</span><strong id="socSafety">—</strong></div>
+         </div>
+         <div style="background:#F9FAFB;padding:16px;border-radius:12px;">
+            <div style="font-weight:700;color:#F59E0B;margin-bottom:12px;font-size:14px;letter-spacing:-0.2px">Governance</div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;"><span style="color:var(--text-2);font-weight:500;">Internet Penetration</span><strong id="govBoard">—</strong></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;"><span style="color:var(--text-2);font-weight:500;">Governance Score</span><strong id="govCompliance">—</strong></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--text-2);font-weight:500;">Infrastructure</span><strong id="govAudit">—</strong></div>
+         </div>
+      </div>
+    </div>
+
+    <!-- Pillar Pie -->
+    <div class="saas-card">
+      <div class="card-header"><div class="card-title">🧩 Pillar Contribution</div></div>
+      <div style="height:220px;position:relative;margin-top:10px;"><canvas id="esgPieChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ESG 3D Scatter -->
+  <div class="saas-card fade-up">
+    <div class="card-header"><div class="card-title">🌐 ESG 3D Entity Landscape</div></div>
+    <div style="height:400px;position:relative;"><canvas id="esgChart"></canvas></div>
+  </div>
+</div>
+
+<!-- ════ SECTION: CLUSTERING ══════════════════════════════════════════ -->
+<div id="section-clustering" class="dash-section" style="display:none">
+  <header class="header fade-up">
+    <div class="header-left">
+      <h1>🧬 Financial Clustering Lab</h1>
+      <p>K-Means Market Segmentation</p>
+    </div>
+  </header>
+  <div class="stat-row">
+    <div class="stat-card fade-up fade-up-1">
+      <div class="stat-card-top"><div class="stat-icon" style="background:#F3E8FF"><svg viewBox="0 0 24 24" fill="none" stroke="#7c6cf0" stroke-width="1.8"><circle cx="7.5" cy="7.5" r="2.5"/><circle cx="16.5" cy="7.5" r="2.5"/><circle cx="12" cy="16" r="2.5"/></svg></div></div>
+      <div class="stat-value" id="cluCount">—</div>
+      <div class="stat-label">Clusters Found</div>
+    </div>
+    <div class="stat-card fade-up fade-up-2">
+      <div class="stat-card-top"><div class="stat-icon" style="background:#ECFDF5"><svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="1.8"><circle cx="12" cy="12" r="3"/></svg></div></div>
+      <div class="stat-value" id="cluModel">—</div>
+      <div class="stat-label">Algorithm</div>
+    </div>
+    <div class="stat-card fade-up fade-up-3">
+      <div class="stat-card-top"><div class="stat-icon" style="background:#EFF6FF"><svg viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div></div>
+      <div class="stat-value" id="cluEntities">0</div>
+      <div class="stat-label">Entities Analyzed</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px" class="fade-up">
+    <div class="saas-card">
+      <div class="card-header"><div class="card-title">📋 Cluster Averages</div></div>
+      <div id="cluTable" style="margin-top:10px;overflow-x:auto"><p style="color:var(--text-2);font-size:13px">Loading cluster data...</p></div>
+    </div>
+    <div class="saas-card">
+      <div class="card-header"><div class="card-title">🌐 3D Cluster Visualization</div></div>
+      <div id="cluPlotlyWrap" style="height:320px;position:relative;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ SECTION: SIMULATION (Monte Carlo) ═══════════════════════════ -->
+<div id="section-simulation" class="dash-section">
   <!-- Header -->
   <header class="header fade-up">
     <div class="header-left">
@@ -947,6 +1232,7 @@ body {
     </div>
   </div>
 
+</div><!-- /section-simulation -->
 </main><!-- /main -->
 
 <!-- ─── RIGHT PANEL ───────────────────────────────────────────────────── -->
@@ -1102,6 +1388,245 @@ body {
 ═══════════════════════════════════════════════════════════ */
 
 const BACKEND_URL = ""; // JS-only GBM engine — no backend required
+
+// ─── Section Switching (replaces old navigateTo) ─────────────────────────────
+function switchSection(id, navEl) {
+  // Hide all sections
+  document.querySelectorAll('.dash-section').forEach(function(s) { s.style.display = 'none'; });
+  var target = document.getElementById('section-' + id);
+  if (target) target.style.display = '';
+
+  // Update sidebar active state
+  document.querySelectorAll('.nav-item').forEach(function(n) {
+    n.classList.remove('active');
+    var dot = n.querySelector('.nav-dot');
+    if (dot) dot.remove();
+  });
+  if (navEl) {
+    navEl.classList.add('active');
+    var dot = document.createElement('div');
+    dot.className = 'nav-dot';
+    navEl.appendChild(dot);
+  }
+
+  // Show/hide right panel (only for Monte Carlo)
+  var rp = document.querySelector('.right-panel');
+  if (rp) rp.style.display = (id === 'simulation') ? '' : 'none';
+
+  // Re-render section data on switch
+  if (typeof DASHBOARD_DATA !== 'undefined') renderSectionData(id);
+}
+
+// ─── Section Data Rendering ───────────────────────────────────────────
+let _sectionChartsRendered = {};
+function renderSectionData(id) {
+  var D = (typeof DASHBOARD_DATA !== 'undefined') ? DASHBOARD_DATA : {};
+
+  if (id === 'overview') {
+    setText('ovDate', new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'}));
+    setText('ovAssets', '$' + (D.total_assets ? (D.total_assets/1e9).toFixed(2) + 'B' : '0.00B'));
+    setText('ovESG', D.avg_esg || '0.0');
+    setText('ovEntities', (D.entity_count || 0).toLocaleString());
+    setText('ovESGcount', (D.esg_count || 0).toLocaleString());
+    setText('ovRegName', D.reg_name || '—');
+    setText('ovR2', 'R² = ' + (D.r2 || '—'));
+    setText('ovClsName', D.cls_name || '—');
+    setText('ovAUC', 'AUC = ' + (D.auc || '—'));
+    setText('ovCluName', D.clu_name || '—');
+    setText('ovClusters', (D.n_clusters || '—') + ' segments');
+    // Sector pie chart
+    if (D.sectors && !_sectionChartsRendered.sector) {
+      _sectionChartsRendered.sector = true;
+      var ctx = document.getElementById('sectorChart');
+      if (ctx) new Chart(ctx, {
+        type: 'doughnut',
+        data: { labels: D.sectors.labels, datasets: [{ data: D.sectors.values,
+          backgroundColor: ['#3B82F6','#10B981','#F59E0B','#EF4444','#7c6cf0','#EC4899','#06B6D4','#8B5CF6','#F97316','#84CC16'],
+          borderWidth: 0 }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11 } } } } }
+      });
+    }
+  }
+
+  if (id === 'credit') {
+    setText('crAUC', D.auc || '—');
+    setText('crHighRisk', D.high_risk || '0');
+    setText('crTotal', (D.credit_total || 0).toLocaleString());
+    setText('crModel', D.cls_name || '—');
+    // Feature importance chart
+    if (D.feat_labels && !_sectionChartsRendered.feature) {
+      _sectionChartsRendered.feature = true;
+      var ctx = document.getElementById('featureChart');
+      if (ctx) new Chart(ctx, {
+        type: 'bar',
+        data: { labels: D.feat_labels, datasets: [{ label: 'Impact',
+          data: D.feat_values, backgroundColor: 'rgba(16,185,129,0.7)',
+          borderRadius: 6, borderSkipped: false }] },
+        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: { x: { grid: { color: 'rgba(0,0,0,0.04)' } }, y: { grid: { display: false } } } }
+      });
+    }
+    // Risk breakdown
+    if (D.high_risk) {
+      var pctVal = ((D.high_risk / D.credit_total) * 100).toFixed(1);
+      var el = document.getElementById('crBreakdown');
+      if (el) el.innerHTML =
+        '<div class="insight-item" style="margin-bottom:10px"><div class="insight-icon" style="background:#FEF2F2">⚠️</div><div><div class="insight-text"><strong>' + D.high_risk + '</strong> entities (' + pctVal + '%) exceed the 90th-pctl risk threshold.</div></div></div>' +
+        '<div class="insight-item" style="margin-bottom:10px"><div class="insight-icon" style="background:#ECFDF5">✅</div><div><div class="insight-text"><strong>' + (D.credit_total - D.high_risk) + '</strong> entities within acceptable risk bounds.</div></div></div>';
+    }
+  }
+
+  if (id === 'esg') {
+    setText('esgScore', D.avg_esg || '0.0');
+    var envP = ((D.env || 0) * 100).toFixed(1), socP = ((D.soc || 0) * 100).toFixed(1), govP = ((D.gov || 0) * 100).toFixed(1);
+    setText('esgEnv', envP + '%'); setText('esgSoc', socP + '%'); setText('esgGov', govP + '%');
+    
+    // Header Context Update
+    if (D.esg_count) {
+       setText('esgDataContext', 'Updated Today | Based on ' + D.esg_count.toLocaleString() + ' tracked entities');
+    }
+
+    // Deep-Dive Sub-Metrics
+    if (D.esg_sub) {
+       setText('envCarbon', D.esg_sub.env.carbon);
+       setText('envEnergy', D.esg_sub.env.energy);
+       setText('envWater', D.esg_sub.env.water);
+       setText('socTurnover', D.esg_sub.soc.turnover);
+       setText('socDiversity', D.esg_sub.soc.diversity);
+       setText('socSafety', D.esg_sub.soc.safety);
+       setText('govBoard', D.esg_sub.gov.board_ind);
+       setText('govCompliance', D.esg_sub.gov.compliance);
+       setText('govAudit', D.esg_sub.gov.audit);
+    }
+
+    // Mini Insights
+    if (D.esg_insights) {
+       var insHTML = '';
+       D.esg_insights.forEach(function(msg, i) {
+           var colors = ['#10B981', '#7c6cf0', '#F59E0B'];
+           insHTML += '<div style="display:flex;gap:12px;align-items:flex-start;">' +
+                      '<div style="min-width:14px;height:14px;border-radius:50%;background:'+colors[i]+';margin-top:2px;"></div>' +
+                      '<div style="font-size:13px;line-height:1.5;color:var(--text-1)">' + msg + '</div></div>';
+       });
+       var listEl = document.getElementById('esgInsightsList');
+       if (listEl) listEl.innerHTML = insHTML;
+    }
+
+    if (!_sectionChartsRendered.esg) {
+      _sectionChartsRendered.esg = true;
+      
+      // Trend Line Chart
+      if (D.esg_trend) {
+         var ctxT = document.getElementById('esgTrendChart');
+         if (ctxT) new Chart(ctxT, {
+             type: 'line',
+             data: { labels: D.esg_trend.labels, datasets: [{
+                 label: 'ESG Score', data: D.esg_trend.data,
+                 borderColor: '#10B981', backgroundColor: 'rgba(16,185,129,0.1)',
+                 borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#fff', pointBorderColor: '#10B981', fill: true, tension: 0.4
+             }]},
+             options: { responsive: true, maintainAspectRatio: false, 
+                 plugins:{legend:{display:false}},
+                 scales: {x:{grid:{display:false}}, y:{grid:{color:'rgba(0,0,0,0.04)', drawBorder:false}}}
+             }
+         });
+      }
+
+      // Doughnut Distribution
+      var ctxP = document.getElementById('esgPieChart');
+      if (ctxP) new Chart(ctxP, {
+          type: 'doughnut',
+          data: { labels: ['Environment', 'Social', 'Governance'], datasets: [{
+              data: [D.env||0, D.soc||0, D.gov||0],
+              backgroundColor: ['#10B981', '#7c6cf0', '#F59E0B'],
+              borderWidth: 0, hoverOffset: 4
+          }]},
+          options: { responsive: true, maintainAspectRatio: false, cutout: '75%', plugins: {legend: {position:'right', labels:{usePointStyle:true, padding:15, font:{size:12, family:"'Plus Jakarta Sans', sans-serif"}}}} }
+      });
+
+      // ESG 3D Scatter Chart (Plotly)
+      if (D.esg_points) {
+          var d = D.esg_points;
+          var trace = {
+              x: d.x, y: d.y, z: d.z,
+              mode: 'markers',
+              marker: { size: 5, color: d.c, colorscale: 'Viridis', opacity: 0.8, line: { width: 0.5, color: '#ffffff' } },
+              type: 'scatter3d'
+          };
+          var layout = {
+              margin: { l: 0, r: 0, b: 0, t: 0 },
+              scene: {
+                  xaxis: { title: 'Environment', backgroundcolor: 'transparent', gridcolor: '#e5e7eb', showbackground: false },
+                  yaxis: { title: 'Social', backgroundcolor: 'transparent', gridcolor: '#e5e7eb', showbackground: false },
+                  zaxis: { title: 'Governance', backgroundcolor: 'transparent', gridcolor: '#e5e7eb', showbackground: false }
+              },
+              paper_bgcolor: 'transparent', plot_bgcolor: 'transparent'
+          };
+          var esgCanvas = document.getElementById('esgChart');
+          if (esgCanvas) {
+              var parent = esgCanvas.parentElement;
+              parent.removeChild(esgCanvas);
+              var plotlyDiv = document.createElement('div');
+              plotlyDiv.id = 'esgPlotlyDiv';
+              plotlyDiv.style.width = '100%';
+              plotlyDiv.style.height = '100%';
+              parent.appendChild(plotlyDiv);
+              Plotly.newPlot('esgPlotlyDiv', [trace], layout, {responsive: true, displayModeBar: false});
+          }
+      }
+    }
+  }
+
+  if (id === 'clustering') {
+    setText('cluCount', D.n_clusters || '—');
+    setText('cluModel', D.clu_name || '—');
+    setText('cluEntities', (D.entity_count || 0).toLocaleString());
+    // Cluster averages table
+    if (D.cluster_cols && D.cluster_rows) {
+      var t = '<table style="width:100%;border-collapse:collapse;font-size:13px">';
+      t += '<tr>' + D.cluster_cols.map(function(c){return '<th style="text-align:left;padding:8px 10px;border-bottom:2px solid #E5E7EB;color:var(--text-2);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px">'+c+'</th>';}).join('') + '</tr>';
+      D.cluster_rows.forEach(function(r,i){
+        t += '<tr style="background:'+(i%2?'#F9FAFB':'#fff')+'">' + r.map(function(v){return '<td style="padding:8px 10px;border-bottom:1px solid #F3F4F6">'+v+'</td>';}).join('') + '</tr>';
+      });
+      t += '</table>';
+      document.getElementById('cluTable').innerHTML = t;
+    }
+    // Cluster 3D Scatter
+    if (D.cluster_points && !_sectionChartsRendered.cluster) {
+      _sectionChartsRendered.cluster = true;
+      var cp = D.cluster_points;
+      var colors = ['#3B82F6','#10B981','#F59E0B','#EF4444','#7c6cf0','#EC4899','#06B6D4','#8B5CF6'];
+      var clusters = [...new Set(cp.c)];
+      var traces = clusters.map(function(cl){
+        var idx = cp.c.map(function(v,i){return v===cl?i:null;}).filter(function(v){return v!==null;});
+        return {
+          x: idx.map(function(i){return cp.x[i];}),
+          y: idx.map(function(i){return cp.y[i];}),
+          z: idx.map(function(i){return cp.z[i];}),
+          mode:'markers', type:'scatter3d', name:'Cluster '+cl,
+          marker:{size:4,color:colors[cl%colors.length],opacity:0.8}
+        };
+      });
+      var layout = {
+        margin:{l:0,r:0,b:0,t:0},
+        scene:{
+          xaxis:{title:cp.labels[0],gridcolor:'#e5e7eb',showbackground:false},
+          yaxis:{title:cp.labels[1],gridcolor:'#e5e7eb',showbackground:false},
+          zaxis:{title:cp.labels[2],gridcolor:'#e5e7eb',showbackground:false}
+        },
+        paper_bgcolor:'transparent',plot_bgcolor:'transparent',
+        legend:{font:{size:11}}
+      };
+      Plotly.newPlot('cluPlotlyWrap',traces,layout,{responsive:true,displayModeBar:false});
+    }
+  }
+}
+
+function setText(id, val) {
+  var el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
 
 // ─── State ────────────────────────────────────────────────────────────────────
 let pathsChartInst = null;
