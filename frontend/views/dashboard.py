@@ -215,17 +215,24 @@ def _n_clusters(clu_model) -> str:
 def _feature_importances(model, df: pd.DataFrame) -> pd.DataFrame:
     try:
         target_c = next(
-            c for c in df.columns
-            if any(kw in c.lower() for kw in ("default", "risk", "label", "target"))
+            (c for c in df.columns if any(kw in c.lower() for kw in ("default", "risk", "label", "target"))), None
         )
-        features = [c for c in df.columns if c != target_c and pd.api.types.is_numeric_dtype(df[c])]
+        
+        if hasattr(model, "feature_names_in_"):
+            features = list(model.feature_names_in_)
+        else:
+            features = [c for c in df.columns if c != target_c and pd.api.types.is_numeric_dtype(df[c])]
+            
         if hasattr(model, "feature_importances_"):
             imps = model.feature_importances_
         elif hasattr(model, "coef_"):
             imps = np.abs(model.coef_[0])
         else:
             return pd.DataFrame()
-        return pd.DataFrame({"Feature": features, "Impact": imps}).sort_values("Impact", ascending=False).head(5)
+            
+        # Ensure lengths match before creating dataframe
+        min_len = min(len(features), len(imps))
+        return pd.DataFrame({"Feature": features[:min_len], "Impact": imps[:min_len]}).sort_values("Impact", ascending=False).head(5)
     except Exception:
         return pd.DataFrame()
 
@@ -236,6 +243,7 @@ def _build_dashboard_data(
     reg_model: Any,
     cls_model: Any,
     clu_model: Any,
+    clu_scaler: Any = None,
 ) -> dict:
     data: dict[str, Any] = {}
 
@@ -428,8 +436,19 @@ def _build_dashboard_data(
                 "c": sample["esg_score"].round(2).tolist(),
                 "labels": ["Environment", "Social", "Governance"]
             }
-    if fin_df is not None and "Cluster" in fin_df.columns:
-        num_cols = fin_df.select_dtypes(include="number").columns.tolist()
+    if fin_df is not None and not fin_df.empty:
+        if "Cluster" not in fin_df.columns and clu_model is not None and clu_scaler is not None:
+            if hasattr(clu_scaler, "feature_names_in_"):
+                features = list(clu_scaler.feature_names_in_)
+            else:
+                features = [c for c in fin_df.select_dtypes(include="number").columns if "Risk" not in c and "Cluster" not in c]
+            if features:
+                scaled = clu_scaler.transform(fin_df[features].fillna(0))
+                fin_df["Cluster"] = clu_model.predict(scaled)
+
+        if "Cluster" in fin_df.columns:
+            num_cols = fin_df.select_dtypes(include="number").columns.tolist()
+            if "Cluster" in num_cols: num_cols.remove("Cluster")
         avgs = fin_df.groupby("Cluster")[num_cols[:4]].mean().round(2)
         data["cluster_cols"] = ["Cluster"] + avgs.columns.tolist()
         data["cluster_rows"] = [[int(idx)] + row.tolist() for idx, row in avgs.iterrows()]
@@ -471,5 +490,6 @@ def render_dashboard(
         reg_model=reg_model,
         cls_model=cls_model,
         clu_model=clu_model,
+        clu_scaler=clu_scaler,
     )
     _render_html_dashboard(dashboard_data)
