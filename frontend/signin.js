@@ -1,6 +1,33 @@
 function navigateTo(page) {
-    if (page === 'signin') page = 'login';
-    window.parent.postMessage({ type: 'finrisk-nav', page: page }, '*');
+    try {
+        if (window.parent && window.parent.document) {
+            var strBtns = window.parent.document.querySelectorAll('button');
+            for (var i = 0; i < strBtns.length; i++) {
+                var btnText = strBtns[i].innerText;
+                if (page === 'dashboard' && btnText.includes('Sign in')) {
+                    strBtns[i].click();
+                    return;
+                }
+                if (page === 'landing' && btnText.includes('Back to Home')) {
+                    strBtns[i].click();
+                    return;
+                }
+            }
+        }
+    } catch(e) { console.warn("DOM navigation failed:", e); }
+
+    // Fallback
+    try {
+        var url = new URL(window.parent.location.href);
+        url.searchParams.set('nav', page);
+        window.parent.location.href = url.toString();
+    } catch (e) {
+        var a = document.createElement('a');
+        a.href = "?nav=" + page;
+        a.target = "_parent";
+        document.body.appendChild(a);
+        a.click();
+    }
 }
 
 function handleSignIn() {
