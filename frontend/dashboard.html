@@ -978,8 +978,72 @@ body {
   30%  { opacity: 0.4; transform: translateY(-2px); }
   100% { opacity: 1; transform: translateY(0); }
 }
-.stat-refresh { animation: statPulse 0.5s ease; }
+/* ═══════════════════════════════════════════════════════════
+   SCROLL PREFERENCES & APPLE-STYLE STICKY SECTIONS
+═══════════════════════════════════════════════════════════ */
+.main {
+  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
+}
 
+/* Glassmorphic Sticky Header */
+.header {
+  position: sticky !important;
+  top: -28px !important; /* Counteract main padding to stick to true top */
+  z-index: 40;
+  background: rgba(235, 240, 246, 0.75) !important; /* Translucent var(--bg) */
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  padding: 28px 24px 16px 24px !important;
+  margin: -28px -24px 20px -24px !important;
+  border-bottom: 1px solid rgba(0,0,0,0.04) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.02) !important;
+}
+
+/* Scroll Snap Alignment for Apple-style stopping points */
+.saas-card, .ov-grid-2, .ov-ml-grid, .stat-row, .chart-section, .dash-section, .percentile-card, .bottom-section {
+  scroll-snap-align: start;
+  scroll-margin-top: 90px; /* leaves room for sticky header */
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCROLL-DRIVEN ANIMATIONS (🔥 MODERN CSS)
+═══════════════════════════════════════════════════════════ */
+@supports (animation-timeline: view()) {
+  /* Scale / Zoom Transitions */
+  .saas-card, .stat-row, .ov-kpi-row, .ov-ml-grid, .ov-grid-2, .chart-section, .percentile-card, .bottom-section {
+    animation: zoom-fade-in linear both !important;
+    animation-timeline: view() !important;
+    animation-range: entry 5% cover 25% !important;
+    will-change: transform, opacity, filter;
+  }
+
+  @keyframes zoom-fade-in {
+    0% {
+      opacity: 0;
+      transform: translateY(60px) scale(0.92);
+      filter: blur(8px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0px);
+    }
+  }
+
+  /* Parallax Scroll on Stat Card Icons */
+  .stat-icon, .ov-kpi-icon {
+    animation: parallax-icon linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+    will-change: transform;
+  }
+
+  @keyframes parallax-icon {
+    0% { transform: translateY(12px) scale(1.1); }
+    100% { transform: translateY(-12px) scale(0.9); }
+  }
+}
 </style>
 </head>
 
