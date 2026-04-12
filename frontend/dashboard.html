@@ -1325,8 +1325,16 @@ body {
       <div id="cluTable" style="margin-top:10px;overflow-x:auto"><p style="color:var(--text-2);font-size:13px">Loading cluster data...</p></div>
     </div>
     <div class="saas-card">
-      <div class="card-header"><div class="card-title">🌐 3D Cluster Visualization</div></div>
-      <div id="cluPlotlyWrap" style="height:320px;position:relative;"></div>
+      <div class="card-header"><div class="card-title">🌐 Gradient Descent</div></div>
+      <div id="cluPlotlyWrap" style="height:420px;position:relative;"></div>
+      <div style="text-align:center; margin-top:8px; margin-bottom:12px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+        <span style="font-family: serif; font-size: 15px; background: #fff; padding: 6px 12px; border-radius: 6px; border: 1px solid #e5e7eb; display: inline-block; color: #000;">
+          <strong style="font-family:sans-serif;font-size:11px;color:#64748B;text-transform:uppercase;margin-right:8px;letter-spacing:0.5px">Loss Surface</strong> <i>L(θ<sub>1</sub>, θ<sub>2</sub>) = θ<sub>1</sub><sup>2</sup> + θ<sub>2</sub><sup>2</sup></i>
+        </span>
+        <span style="font-family: serif; font-size: 15px; background: #fff; padding: 6px 12px; border-radius: 6px; border: 1px solid #e5e7eb; display: inline-block; color: #000;">
+          <strong style="font-family:sans-serif;font-size:11px;color:#64748B;text-transform:uppercase;margin-right:8px;letter-spacing:0.5px">Descent Step</strong> <i>θ<sub>new</sub> = θ<sub>old</sub> - α∇L(θ)</i>
+        </span>
+      </div>
     </div>
   </div>
 </div>
@@ -2035,33 +2043,78 @@ function renderSectionData(id) {
       t += '</table>';
       document.getElementById('cluTable').innerHTML = t;
     }
-    // Cluster 3D Scatter
-    if (D.cluster_points && !_sectionChartsRendered.cluster) {
+    // Gradient Descent 3D Surface
+    if (!_sectionChartsRendered.cluster) {
       _sectionChartsRendered.cluster = true;
-      var cp = D.cluster_points;
-      var colors = ['#3B82F6','#10B981','#F59E0B','#EF4444','#7c6cf0','#EC4899','#06B6D4','#8B5CF6'];
-      var clusters = [...new Set(cp.c)];
-      var traces = clusters.map(function(cl){
-        var idx = cp.c.map(function(v,i){return v===cl?i:null;}).filter(function(v){return v!==null;});
-        return {
-          x: idx.map(function(i){return cp.x[i];}),
-          y: idx.map(function(i){return cp.y[i];}),
-          z: idx.map(function(i){return cp.z[i];}),
-          mode:'markers', type:'scatter3d', name:'Cluster '+cl,
-          marker:{size:4,color:colors[cl%colors.length],opacity:0.8}
-        };
-      });
+
+      var x1D = [];
+      var y1D = [];
+      var z2D = [];
+      for(var i=-3; i<=3.1; i+=0.2){
+          x1D.push(i);
+          y1D.push(i);
+      }
+      for(var i=0; i<y1D.length; i++){
+          var z_row = [];
+          for(var j=0; j<x1D.length; j++){
+              z_row.push(x1D[j]*x1D[j] + y1D[i]*y1D[i]);
+          }
+          z2D.push(z_row);
+      }
+      
+      var surfaceTrace = {
+          z: z2D,
+          x: x1D,
+          y: y1D,
+          type: 'surface',
+          colorscale: 'RdBu',
+          reversescale: true,
+          showscale: false,
+          opacity: 0.8
+      };
+
+      var pathX = [];
+      var pathY = [];
+      var pathZ = [];
+      var currX = 2.5;
+      var currY = 1.0;
+      var learningRate = 0.08;
+      
+      for(var step=0; step<20; step++){
+          pathX.push(currX);
+          pathY.push(currY);
+          pathZ.push(currX*currX + currY*currY + 0.2); // slight offset so line is visible above surface
+          var gradX = 2 * currX;
+          var gradY = 2 * currY;
+          currX = currX - learningRate * gradX;
+          currY = currY - learningRate * gradY;
+      }
+      
+      var pathTrace = {
+          x: pathX,
+          y: pathY,
+          z: pathZ,
+          mode: 'lines+markers',
+          type: 'scatter3d',
+          marker: {size: 4, color: '#000000'},
+          line: {color: '#000000', width: 3},
+          name: 'Descent Path'
+      };
+
       var layout = {
         margin:{l:0,r:0,b:0,t:0},
         scene:{
-          xaxis:{title:cp.labels[0],gridcolor:'#e5e7eb',showbackground:false},
-          yaxis:{title:cp.labels[1],gridcolor:'#e5e7eb',showbackground:false},
-          zaxis:{title:cp.labels[2],gridcolor:'#e5e7eb',showbackground:false}
+          xaxis:{title:'Parameter 1',gridcolor:'#e5e7eb',showbackground:false},
+          yaxis:{title:'Parameter 2',gridcolor:'#e5e7eb',showbackground:false},
+          zaxis:{title:'Loss',gridcolor:'#e5e7eb',showbackground:false},
+          aspectratio: {x: 1, y: 1, z: 0.7},
+          camera: { eye: {x: 1.3, y: -1.3, z: 0.7} }
         },
         paper_bgcolor:'transparent',plot_bgcolor:'transparent',
-        legend:{font:{size:11}}
+        showlegend: false
       };
-      Plotly.newPlot('cluPlotlyWrap',traces,layout,{responsive:true,displayModeBar:false});
+      
+      Plotly.newPlot('cluPlotlyWrap',[surfaceTrace, pathTrace],layout,{responsive:true,displayModeBar:false});
     }
   }
 }
