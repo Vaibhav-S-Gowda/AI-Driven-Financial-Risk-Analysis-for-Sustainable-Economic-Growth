@@ -1058,6 +1058,10 @@ body {
 /* ═══════════════════════════════════════════════════════════
    RESPONSIVE DESIGN (TABLETS & MOBILE)
 ═══════════════════════════════════════════════════════════ */
+.card, .saas-card, .rp-card, .rp-card-dark, .percentile-card, .stat-card, .ov-kpi {
+  min-width: 0;
+}
+
 @media (max-width: 1024px) {
   .shell { flex-direction: column; }
   .sidebar { width: 100%; min-height: auto; flex-direction: row; justify-content: center; border-radius: 0; padding: 10px 20px; gap: 16px; border-bottom: 1px solid var(--border); overflow-x: auto;}
