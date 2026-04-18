@@ -54,7 +54,7 @@ html, body {
   color: var(--text);
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* Desktop defaults to side-by-side */
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1094,14 +1094,16 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   RESPONSIVE DESIGN (TABLETS & MOBILE)
+   RESPONSIVE DESIGN (MOBILE-FIRST PRINCIPLES)
 ═══════════════════════════════════════════════════════════ */
 .card, .saas-card, .rp-card, .rp-card-dark, .percentile-card, .stat-card, .ov-kpi {
-  min-width: 0;
+  min-width: 0; /* Extremely important for chart canvas flexible sizing */
 }
 
+/* Tablet & Mobile (≤ 1024px) */
 @media (max-width: 1024px) {
-  .shell { flex-direction: column; }
+  body { flex-direction: column; height: 100vh; overflow: hidden; }
+  .shell { flex-direction: column; height: calc(100vh - 62px); }
   .sidebar { width: 100%; min-height: auto; flex-direction: row; justify-content: center; border-radius: 0; padding: 10px 20px; gap: 16px; border-bottom: 1px solid var(--border); overflow-x: auto;}
   .sidebar-logo { display: none; }
   .sidebar-spacer { display: none; }
@@ -1110,18 +1112,29 @@ body {
   .stat-row, .ov-kpi-row { grid-template-columns: repeat(2, 1fr); }
   .chart-section, .bottom-section, .ov-grid-2, .interp-grid { grid-template-columns: 1fr; }
   .rp-card, .rp-card-dark { width: 100%; margin-bottom: 20px;}
-  .main { padding: 20px; }
+  .main { padding: 20px; flex: 1; overflow-y: auto; }
   .percentile-card { height: auto; }
 }
 
+/* Phone (≤ 768px) */
 @media (max-width: 768px) {
   .stat-row, .ov-kpi-row { grid-template-columns: 1fr; }
-  .chart-section, .bottom-section, .ov-grid-2, .interp-grid { grid-template-columns: 1fr; }
   .header { flex-direction: column; align-items: flex-start; gap: 16px;}
   .header-actions { width: 100%; justify-content: space-between; }
   .right-panel { padding: 16px; }
   .main { padding: 16px; }
   .metrics-table { display: block; overflow-x: auto; white-space: nowrap;}
+}
+
+/* Small Phone (≤ 480px) */
+@media (max-width: 480px) {
+  .sidebar { gap: 8px; padding: 10px; }
+  .nav-item { width: 36px; height: 36px; }
+  .nav-item svg { width: 16px; height: 16px; }
+  .header { padding: 16px 16px 12px 16px !important; margin: -16px -16px 16px -16px !important; }
+  .main { padding: 12px; }
+  .card, .stat-card { padding: 16px; }
+  .stat-value { font-size: 20px; }
 }
 </style>
 </head>
