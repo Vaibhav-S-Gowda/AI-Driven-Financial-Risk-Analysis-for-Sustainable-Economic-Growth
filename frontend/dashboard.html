@@ -20,6 +20,44 @@
 <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 <style>
 /* ═══════════════════════════════════════════════════════════
+   GLOBAL VARIABLES & BASE
+═══════════════════════════════════════════════════════════ */
+:root {
+  --bg: #EBF0F6;
+  --sidebar: #09090B;
+  --sidebar-w: 66px;
+  --right-w: 360px;
+  --card: #FFFFFF;
+  --text: #1E293B;
+  --text-2: #64748B;
+  --text-3: #94A3B8;
+  --border: rgba(0,0,0,0.08);
+
+  --blue: #3B82F6;
+  --blue-bg: #EFF6FF;
+  --green: #10B981;
+  --green-bg: #ECFDF5;
+  --red: #EF4444;
+  --red-bg: #FEF2F2;
+
+  --r: 16px;
+  --r-sm: 8px;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+  --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.06);
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html, body {
+  margin: 0; padding: 0;
+  width: 100%; height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ═══════════════════════════════════════════════════════════
    SIDEBAR
 ═══════════════════════════════════════════════════════════ */
 .sidebar {
