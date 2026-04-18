@@ -14,11 +14,20 @@ from backend.config import SUSTAINABLE_INDICATORS
 
 # --- Page Configuration ---
 st.set_page_config(
-    page_title="FinRisk AI Dashboard",
+    page_title="FinRisk AI | Monte Carlo & ESG Dashboard",
     page_icon="◈",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
+
+# --- SEO Metadata Injection ---
+st.markdown("""
+<head>
+    <meta name="description" content="FinRisk AI is an advanced financial risk analysis platform featuring Monte Carlo simulations, ESG sustainability tracking, and credit risk ML models.">
+    <meta name="keywords" content="FinRisk AI, Monte Carlo Simulation, ESG Sustainability, Credit Risk Analysis, Financial Machine Learning, AI Dashboard">
+    <meta name="author" content="Vaibhav S Gowda">
+</head>
+""", unsafe_allow_html=True)
 
 # --- Navigation Logic (resolved BEFORE heavy loading) ---
 def get_nav_from_url():
