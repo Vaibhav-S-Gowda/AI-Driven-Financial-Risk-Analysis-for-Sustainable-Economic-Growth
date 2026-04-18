@@ -51,7 +51,19 @@ def _render_html_dashboard(dashboard_data: dict | None = None) -> None:
         .stMainBlockContainer,
         section.main > div                 { padding: 0 !important;
                                              max-width: 100% !important;
-                                             margin: 0 !important; }
+                                             margin: 0 !important;
+                                             height: 100dvh !important;
+                                             overflow: hidden !important; }
+        
+        /* Prevent Pull-to-Refresh & force exact fit */
+        html, body                         { overscroll-behavior: none !important;
+                                             overscroll-behavior-y: none !important; }
+        iframe                             { height: 100dvh !important;
+                                             max-height: 100vh !important;
+                                             width: 100% !important;
+                                             border: none !important;
+                                             margin: 0 !important;
+                                             padding: 0 !important; }
     </style>
     """, unsafe_allow_html=True)
 
