@@ -13,6 +13,25 @@
   <i>Bridging the gap between traditional credit risk assessment and ESG-aware investment intelligence using Machine Learning.</i>
 </p>
 
+## 📊 Project Dashboard
+[![FinRisk AI Preview](./frontend/assets/dashboard-og.png)](https://finriskai.streamlit.app/?nav=dashboard)
+*Click the image above to view the live interactive dashboard.*
+
+---
+
+## 🛠️ Deployment
+The application is built using Streamlit and is currently hosted on Streamlit Community Cloud.
+
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://finriskai.streamlit.app/?nav=dashboard)
+
+---
+
+## 🛠️ Deployment
+The application is built using Streamlit and is currently hosted on Streamlit Community Cloud.
+
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://finriskai.streamlit.app/?nav=dashboard)
+
+
 ---
 
 ## 🔍 The Problem
