@@ -26,14 +26,6 @@ The application is built using Streamlit and is currently hosted on Streamlit Co
 
 ---
 
-## 🛠️ Deployment
-The application is built using Streamlit and is currently hosted on Streamlit Community Cloud.
-
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://finriskai.streamlit.app/?nav=dashboard)
-
-
----
-
 ## 🔍 The Problem
 
 Financial institutions today face a **dual challenge** that traditional risk models were never designed to handle:
