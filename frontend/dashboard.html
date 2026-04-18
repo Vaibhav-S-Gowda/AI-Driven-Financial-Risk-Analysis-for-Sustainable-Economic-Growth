@@ -4,6 +4,16 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>FinRisk AI — Monte Carlo Dashboard</title>
+<meta name="description" content="AI-powered risk analysis dashboard and real-time financial intelligence.">
+<meta name="keywords" content="AI financial analytics, risk monitoring dashboard, real-time insights, predictive risk analysis, fintech intelligence">
+<meta property="og:title" content="FinRisk AI — Monte Carlo Dashboard">
+<meta property="og:description" content="AI-powered risk analysis dashboard and real-time financial intelligence.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/assets/dashboard-og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FinRisk AI — Monte Carlo Dashboard">
+<meta name="twitter:description" content="Predictive risk analysis and real-time financial intelligence.">
+<meta name="twitter:image" content="/assets/dashboard-og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
@@ -1043,6 +1053,33 @@ body {
     0% { transform: translateY(12px) scale(1.1); }
     100% { transform: translateY(-12px) scale(0.9); }
   }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE DESIGN (TABLETS & MOBILE)
+═══════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .shell { flex-direction: column; }
+  .sidebar { width: 100%; min-height: auto; flex-direction: row; justify-content: center; border-radius: 0; padding: 10px 20px; gap: 16px; border-bottom: 1px solid var(--border); overflow-x: auto;}
+  .sidebar-logo { display: none; }
+  .sidebar-spacer { display: none; }
+  .sidebar-avatar { margin: 0; }
+  .right-panel { width: 100%; padding: 20px; border-left: none; border-top: 1px solid var(--border); overflow: visible;}
+  .stat-row, .ov-kpi-row { grid-template-columns: repeat(2, 1fr); }
+  .chart-section, .bottom-section, .ov-grid-2, .interp-grid { grid-template-columns: 1fr; }
+  .rp-card, .rp-card-dark { width: 100%; margin-bottom: 20px;}
+  .main { padding: 20px; }
+  .percentile-card { height: auto; }
+}
+
+@media (max-width: 768px) {
+  .stat-row, .ov-kpi-row { grid-template-columns: 1fr; }
+  .chart-section, .bottom-section, .ov-grid-2, .interp-grid { grid-template-columns: 1fr; }
+  .header { flex-direction: column; align-items: flex-start; gap: 16px;}
+  .header-actions { width: 100%; justify-content: space-between; }
+  .right-panel { padding: 16px; }
+  .main { padding: 16px; }
+  .metrics-table { display: block; overflow-x: auto; white-space: nowrap;}
 }
 </style>
 </head>
