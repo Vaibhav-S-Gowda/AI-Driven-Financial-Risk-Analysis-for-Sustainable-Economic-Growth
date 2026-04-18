@@ -476,7 +476,7 @@ html, body {
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
-.field input {
+.field input, .field select {
   width: 100%;
   height: 38px;
   padding: 0 12px;
@@ -490,7 +490,17 @@ html, body {
   outline: none;
   transition: var(--transition);
 }
-.field input:focus {
+.field select {
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%236B7280" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px;
+  padding-right: 30px;
+}
+.field input:focus, .field select:focus {
   border-color: var(--text);
   background: var(--card);
 }
@@ -1210,7 +1220,7 @@ body {
 
   <div class="sidebar-spacer"></div>
 
-  <div class="nav-item" data-tip="Settings">
+  <div class="nav-item" data-tip="Settings" onclick="switchSection('settings',this)">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
   </div>
   <div class="sidebar-avatar" id="userAvatar">G</div>
@@ -1568,9 +1578,7 @@ body {
     </div>
   </header>
 
-  <div class="sim-layout">
-  <div class="sim-main">
-    <!-- Stat Cards -->
+      <!-- Stat Cards -->
   <div class="stat-row">
     <div class="stat-card fade-up fade-up-1">
       <div class="stat-card-top">
@@ -1754,9 +1762,93 @@ body {
   </div>
 
 
+  
+</div><!-- /section-simulation -->
+
+<!-- SECTION: SETTINGS -->
+<div id="section-settings" class="dash-section" style="display:none;">
+  <header class="header fade-up">
+    <div class="header-left">
+      <h1>Settings</h1>
+      <p>Configure your workspace and preferences</p>
+    </div>
+  </header>
+
+  <div class="card fade-up">
+    <div class="card-title">User Preferences</div>
+    <div class="dash-grid-3" style="margin-top:16px;">
+       <div class="field">
+          <label>Theme</label>
+          <select><option>Light</option><option>Dark</option><option>Auto</option></select>
+       </div>
+       <div class="field">
+          <label>Timezone</label>
+          <select><option>Asia/Kolkata</option><option>UTC</option><option>EST</option></select>
+       </div>
+       <div class="field">
+          <label>Layout Density</label>
+          <select><option>Compact</option><option>Comfortable</option></select>
+       </div>
+       <div class="field">
+          <label>Currency</label>
+          <select><option>INR (₹)</option><option>USD ($)</option><option>EUR (€)</option></select>
+       </div>
+       <div class="field">
+          <label>Date Format</label>
+          <select><option>DD-MM-YYYY</option><option>MM-DD-YYYY</option></select>
+       </div>
+    </div>
   </div>
-  <!-- ─── RIGHT PANEL ───────────────────────────────────────────────────── -->
-<aside class="sim-sidebar">
+
+  <div class="card fade-up">
+    <div class="card-title">Portfolio Risk Configuration</div>
+    <div class="dash-grid-2" style="margin-top:16px;">
+       <div class="field">
+          <label>Risk Tolerance</label>
+          <select><option>Conservative</option><option>Moderate</option><option>Aggressive</option></select>
+       </div>
+       <div class="field">
+          <label>Risk Model</label>
+          <select><option>AI-Based</option><option>Volatility-Based</option><option>Hybrid</option></select>
+       </div>
+       <div class="field">
+          <label>Max Sector Exposure (%)</label>
+          <input type="number" value="30"/>
+       </div>
+       <div class="field">
+          <label>Rebalancing Threshold (%)</label>
+          <input type="number" value="10"/>
+       </div>
+    </div>
+  </div>
+
+  <div class="card fade-up">
+    <div class="card-title">Advanced & Security</div>
+    <div class="dash-grid-2" style="margin-top:16px;">
+       <div class="field">
+          <label>Monte Carlo Runs</label>
+          <input type="number" value="1000"/>
+       </div>
+       <div class="field">
+          <label>Confidence Interval (%)</label>
+          <input type="number" value="95"/>
+       </div>
+       <div class="field">
+          <label>Session Timeout</label>
+          <select><option>5 min</option><option>15 min</option><option>30 min</option></select>
+       </div>
+    </div>
+    <div style="margin-top:20px; display:flex; gap:12px; justify-content:flex-end;">
+      <button class="btn-outline">Reset Defaults</button>
+      <button class="btn-primary">Save Settings</button>
+    </div>
+  </div>
+</div>
+
+</main><!-- /main -->
+
+<!-- ─── RIGHT PANEL ───────────────────────────────────────────────────── -->
+<aside class="right-panel">
 
   <!-- Simulation Status Card (dark) -->
   <div class="rp-card-dark">
@@ -1899,9 +1991,6 @@ body {
   </div>
 
 </aside>
-</div>
-</div><!-- /section-simulation -->
-</main><!-- /main -->
 
 
 </div><!-- /shell -->
