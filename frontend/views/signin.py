@@ -93,6 +93,25 @@ def render_signin():
             '<nav class="navbar">',
             '<nav class="navbar" style="display:none !important;">'
         )
+        
+        # Inject popstate listener for browser back/forward support
+        popstate_script = """
+<script>
+(function() {
+    try {
+        window.parent.addEventListener('popstate', function() {
+            var params = new URLSearchParams(window.parent.location.search);
+            var nav = params.get('nav') || 'landing';
+            if (nav !== 'login') {
+                window.parent.location.reload();
+            }
+        });
+    } catch(e) {}
+})();
+</script>
+"""
+        html_content = html_content.replace('</body>', popstate_script + '</body>')
+        
         components.html(html_content, height=900, scrolling=True)
     else:
         st.error("signin.html not found.")
