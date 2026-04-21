@@ -12,10 +12,18 @@ from frontend.views.signin import render_signin
 from frontend.views.dashboard import render_dashboard
 from backend.config import SUSTAINABLE_INDICATORS
 
+from PIL import Image
+
+favicon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "frontend", "assets", "favicon.png")
+try:
+    favicon = Image.open(favicon_path)
+except Exception:
+    favicon = "◈"
+
 # --- Page Configuration ---
 st.set_page_config(
     page_title="FinRisk AI | Monte Carlo & ESG Dashboard",
-    page_icon="◈",
+    page_icon=favicon,
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -40,8 +48,8 @@ def get_nav_from_url():
 def push_nav_to_url(val: str):
     st.query_params["nav"] = val
 
-if "page" not in st.session_state:
-    st.session_state.page = get_nav_from_url()
+# Always sync page from URL — this makes browser back/forward work
+st.session_state.page = get_nav_from_url()
 
 # --- Fast paths: Landing & Sign-in render instantly (no model loading!) ---
 if st.session_state.page == "landing":
