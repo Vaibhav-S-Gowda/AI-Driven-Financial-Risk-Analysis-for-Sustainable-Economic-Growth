@@ -1,4 +1,10 @@
 function navigateTo(page) {
+    // Push browser history so back button works
+    try {
+        var currentUrl = new URL(window.parent.location.href);
+        window.parent.history.pushState({nav: 'login'}, '', currentUrl.toString());
+    } catch(he) {}
+
     try {
         if (window.parent && window.parent.document) {
             var strBtns = window.parent.document.querySelectorAll('button');
