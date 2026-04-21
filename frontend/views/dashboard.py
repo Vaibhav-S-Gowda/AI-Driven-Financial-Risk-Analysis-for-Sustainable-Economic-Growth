@@ -167,7 +167,17 @@ def _render_html_dashboard(dashboard_data: dict | None = None) -> None:
 
     /* Also re-apply whenever the parent URL changes (tab navigation) */
     try {
-        window.parent.addEventListener('popstate', fix);
+        window.parent.addEventListener('popstate', function() {
+            fix();
+            /* If the URL nav param changed (browser back/forward), reload to let Streamlit re-route */
+            try {
+                var params = new URLSearchParams(window.parent.location.search);
+                var nav = params.get('nav') || 'landing';
+                if (nav !== 'dashboard') {
+                    window.parent.location.reload();
+                }
+            } catch(pe) {}
+        });
     } catch(e) {}
 })();
 </script>
