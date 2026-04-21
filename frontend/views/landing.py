@@ -91,6 +91,24 @@ def render_landing():
         html_content = html_content.replace('<!-- CSS_INJECTION_HOOK -->', css_content)
         html_content = html_content.replace('<!-- JS_INJECTION_HOOK -->', js_content)
         
+        # Inject popstate listener for browser back/forward support
+        popstate_script = """
+<script>
+(function() {
+    try {
+        window.parent.addEventListener('popstate', function() {
+            var params = new URLSearchParams(window.parent.location.search);
+            var nav = params.get('nav') || 'landing';
+            if (nav !== 'landing') {
+                window.parent.location.reload();
+            }
+        });
+    } catch(e) {}
+})();
+</script>
+"""
+        html_content = html_content.replace('</body>', popstate_script + '</body>')
+        
         components.html(html_content, scrolling=True, height=900)
     else:
         st.error("landing.html not found.")
