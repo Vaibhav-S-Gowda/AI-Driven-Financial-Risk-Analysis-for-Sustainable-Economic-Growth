@@ -14,6 +14,7 @@
 <meta name="twitter:title" content="FinRisk AI — Monte Carlo Dashboard">
 <meta name="twitter:description" content="Predictive risk analysis and real-time financial intelligence.">
 <meta name="twitter:image" content="/assets/dashboard-og.png">
+<link rel="icon" type="image/png" href="./assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
@@ -1223,6 +1224,9 @@ body {
   <div class="nav-item" data-tip="Settings" onclick="switchSection('settings',this)">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
   </div>
+  <div class="nav-item" data-tip="Sign Out" onclick="handleLogout()" style="color:rgba(255,255,255,0.35);">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+  </div>
   <div class="sidebar-avatar" id="userAvatar">G</div>
 </aside>
 
@@ -2029,6 +2033,24 @@ function switchSection(id, navEl) {
 
   // Re-render section data on switch
   if (typeof DASHBOARD_DATA !== 'undefined') renderSectionData(id);
+}
+
+// ─── Logout / Back to Home ────────────────────────────────────────────
+function handleLogout() {
+  try {
+    // Navigate Streamlit parent to landing page
+    var pd = window.parent.document;
+    var url = new URL(window.parent.location.href);
+    url.searchParams.set('nav', 'landing');
+    window.parent.location.href = url.toString();
+  } catch (e) {
+    // Fallback: try direct href
+    try {
+      window.top.location.href = '/?nav=landing';
+    } catch (e2) {
+      window.location.href = '/?nav=landing';
+    }
+  }
 }
 
 // ─── Section Data Rendering ───────────────────────────────────────────
