@@ -1,16 +1,20 @@
 // ── Navigation (works inside Streamlit iframe sandbox) ──
 function navigateTo(page) {
     if (page === 'signin' || page === 'login' || page === 'sign in') {
+        // Push browser history so back button works
+        try {
+            var currentUrl = new URL(window.parent.location.href);
+            window.parent.history.pushState({nav: 'landing'}, '', currentUrl.toString());
+        } catch(he) {}
+
         // Bulletproof navigation: Click the hidden Streamlit button in the parent window.
-        // Streamlit wraps custom HTML in sandboxes that block window.top navigation,
-        // but since it's same-origin, we can still query Selector the main parent DOM!
         try {
             if (window.parent && window.parent.document) {
                 var strBtns = window.parent.document.querySelectorAll('button');
                 for (var i = 0; i < strBtns.length; i++) {
                     if (strBtns[i].innerText.includes('hidden_login')) {
                         strBtns[i].click();
-                        return; // Navigation triggered successfully!
+                        return;
                     }
                 }
             }
@@ -18,7 +22,7 @@ function navigateTo(page) {
             console.warn("DOM button click fallback failed:", e);
         }
 
-        // Fallback 2: Try direct URL replacement (often blocked by Streamlit iframe sandbox without allow-top-navigation)
+        // Fallback 2: Try direct URL replacement
         try {
             var url = new URL(window.parent.location.href);
             url.searchParams.set('nav', 'login');
