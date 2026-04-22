@@ -975,7 +975,7 @@
         </div>
         <div class="nav-actions">
             <button class="btn-outline" onclick="navigateTo('signin')">Sign in</button>
-            <button class="btn-primary" onclick="navigateTo('contact')">Get in touch</button>
+            <button class="btn-primary" onclick="window.location.href='mailto:contact@finrisk.ai'">Get in touch</button>
         </div>
     </nav>
 
@@ -1010,7 +1010,7 @@
             </div>
 
             <div class="hero-floating-card reveal-up reveal-delay-3">
-                <div class="floating-img"></div>
+                <div class="floating-img" style="background: url('assets/hero-card.png') center/cover; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></div>
                 <div class="floating-text">
                     Discover Our Recent Model
                     <span class="arrow">↗</span>
@@ -1077,32 +1077,32 @@
         <section class="split-section reveal-up">
             <div>
                 <h2 class="split-title reveal-up">Trusted service, <span>for your<br>various needs</span></h2>
-                <button class="btn-primary reveal-up reveal-delay-1" onclick="navigateTo('contact')">Get in touch
+                <button class="btn-primary reveal-up reveal-delay-1" onclick="window.location.href='mailto:contact@finrisk.ai'">Get in touch
                     ↗</button>
                 <div class="split-mini-grid reveal-up reveal-delay-2">
                     <div class="mini-card">
                         <div class="mini-card-num">01</div>
                         <h4>Credit Risk<br>assessment</h4>
-                        <a href="#">View Details</a>
+                        <a href="#" onclick="event.preventDefault(); navigateTo('signin');">View Details</a>
                     </div>
                     <div class="mini-card">
                         <div class="mini-card-num">02</div>
                         <h4>ESG impact<br>analysis</h4>
-                        <a href="#">View Details</a>
+                        <a href="#" onclick="event.preventDefault(); navigateTo('signin');">View Details</a>
                     </div>
                     <div class="mini-card">
                         <div class="mini-card-num">03</div>
                         <h4>Monte Carlo<br>simulations</h4>
-                        <a href="#">View Details</a>
+                        <a href="#" onclick="event.preventDefault(); navigateTo('signin');">View Details</a>
                     </div>
                     <div class="mini-card">
                         <div class="mini-card-num">04</div>
                         <h4>Behavioral<br>clustering</h4>
-                        <a href="#">View Details</a>
+                        <a href="#" onclick="event.preventDefault(); navigateTo('signin');">View Details</a>
                     </div>
                 </div>
             </div>
-            <div class="split-image-ph reveal-scale"></div>
+            <div class="split-image-ph reveal-scale" style="background: url('assets/split-visual.png') center/cover; box-shadow: 0 20px 40px rgba(0,0,0,0.2);"></div>
         </section>
 
         <section class="split-two reveal-up">
@@ -1116,7 +1116,7 @@
                     <button class="btn-primary" onclick="navigateTo('signin')">View case study</button>
                     <div class="testi-author">Jeniffer Kolobaly <span>— CTO EV Medtronic</span></div>
                 </div>
-                <div class="split-image-ph reveal-scale reveal-delay-2" style="height:400px;"></div>
+                <div class="split-image-ph reveal-scale reveal-delay-2" style="height:400px; background: url('assets/testimonial-visual.png') center/cover; box-shadow: 0 20px 40px rgba(0,0,0,0.2);"></div>
             </div>
         </section>
     </div>
@@ -1135,7 +1135,7 @@
             <div class="footer-right reveal-up reveal-delay-2">
                 <p>By increasing the effectiveness and efficiency of financial analysis, the use of predictive
                     intelligence is highly profitable for all institutions.</p>
-                <a href="#contact" class="btn-white">Get in touch ↗</a>
+                <a href="mailto:contact@finrisk.ai" class="btn-white">Get in touch ↗</a>
             </div>
         </div>
         <div class="footer-bottom">
