@@ -1,6 +1,6 @@
 // ── Navigation (works inside Streamlit iframe sandbox) ──
 function navigateTo(page) {
-    if (page === 'signin' || page === 'login' || page === 'sign in') {
+    if (page === 'signin' || page === 'login' || page === 'sign in' || page === 'dashboard') {
         // Push browser history so back button works
         try {
             var currentUrl = new URL(window.parent.location.href);
@@ -12,7 +12,7 @@ function navigateTo(page) {
             if (window.parent && window.parent.document) {
                 var strBtns = window.parent.document.querySelectorAll('button');
                 for (var i = 0; i < strBtns.length; i++) {
-                    if (strBtns[i].innerText.includes('hidden_login')) {
+                    if (strBtns[i].textContent.includes('hidden_dashboard')) {
                         strBtns[i].click();
                         return;
                     }
@@ -25,12 +25,12 @@ function navigateTo(page) {
         // Fallback 2: Try direct URL replacement
         try {
             var url = new URL(window.parent.location.href);
-            url.searchParams.set('nav', 'login');
+            url.searchParams.set('nav', 'dashboard');
             window.parent.location.href = url.toString();
         } catch (e) {
             console.error("Direct navigation failed:", e);
             var a = document.createElement('a');
-            a.href = "?nav=login";
+            a.href = "?nav=dashboard";
             a.target = "_parent";
             document.body.appendChild(a);
             a.click();
