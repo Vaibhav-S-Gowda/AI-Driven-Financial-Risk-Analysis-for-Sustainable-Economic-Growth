@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."
 
 from data_processor import DataProcessor
 from frontend.views.landing import render_landing
-from frontend.views.signin import render_signin
+
 from frontend.views.dashboard import render_dashboard
 from backend.config import SUSTAINABLE_INDICATORS
 
@@ -57,10 +57,7 @@ if st.session_state.page == "landing":
     render_landing()
     st.stop()
 
-if st.session_state.page == "login":
-    push_nav_to_url("login")
-    render_signin()
-    st.stop()
+
 
 # --- Dashboard path: show premium FinRisk AI loader while models load ---
 LOADING_HTML = """
