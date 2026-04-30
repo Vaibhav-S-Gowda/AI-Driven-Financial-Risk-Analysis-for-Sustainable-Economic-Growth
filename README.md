@@ -1,6 +1,6 @@
 ---
 title: FinRisk AI
-emoji: ◈
+emoji: 📊
 colorFrom: blue
 colorTo: green
 sdk: streamlit
