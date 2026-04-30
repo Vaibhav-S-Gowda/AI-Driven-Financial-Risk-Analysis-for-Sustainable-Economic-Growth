@@ -1,3 +1,15 @@
+---
+title: FinRisk AI
+emoji: ◈
+colorFrom: blue
+colorTo: green
+sdk: streamlit
+sdk_version: "1.45.1"
+app_file: backend/app.py
+pinned: false
+license: mit
+---
+
 <div align="center">
   <img src="https://img.shields.io/badge/Status-Production%20Ready-success?style=for-the-badge" alt="Production Ready">
   <img src="https://img.shields.io/badge/Python-3.11+-blue?style=for-the-badge&logo=python" alt="Python">
