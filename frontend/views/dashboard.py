@@ -32,9 +32,20 @@ def _render_html_dashboard(dashboard_data: dict | None = None) -> None:
     so the iframe expands to cover the full viewport.
     """
 
+    # ── 0. Hidden navigation trigger ─────────────────────────────────────────
+    st.markdown("<div id='st-hidden-btn-container'>", unsafe_allow_html=True)
+    if st.button("hidden_landing", key="dash_hidden_landing_trigger"):
+        st.session_state["page"] = "landing"
+        try:
+            st.query_params["nav"] = "landing"
+        except Exception: pass
+        st.rerun()
+    st.markdown("</div>", unsafe_allow_html=True)
+
     # ── 1. Python-side chrome removal ────────────────────────────────────────
     st.markdown("""
     <style>
+        div[data-testid="stButton"]        { display: none !important; visibility: hidden !important; height: 0 !important; margin: 0 !important; padding: 0 !important; }
         [data-testid="stSidebar"]          { display: none !important; }
         [data-testid="stHeader"]           { display: none !important; }
         footer                             { display: none !important; }
@@ -168,13 +179,23 @@ def _render_html_dashboard(dashboard_data: dict | None = None) -> None:
     /* Also re-apply whenever the parent URL changes (tab navigation) */
     try {
         window.parent.addEventListener('popstate', function() {
-            fix();
-            /* If the URL nav param changed (browser back/forward), reload to let Streamlit re-route */
             try {
                 var params = new URLSearchParams(window.parent.location.search);
                 var nav = params.get('nav') || 'landing';
                 if (nav !== 'dashboard') {
-                    window.parent.location.reload();
+                    /* Instantly hide all iframes so Landing page is visible while Streamlit reruns */
+                    var pd = window.parent.document;
+                    var frames = pd.querySelectorAll('iframe');
+                    for (var i = 0; i < frames.length; i++) {
+                        frames[i].style.opacity = '0';
+                        frames[i].style.pointerEvents = 'none';
+                        setTimeout(function(f) { f.style.display = 'none'; if(f.parentElement) f.parentElement.style.display = 'none'; }, 50, frames[i]);
+                    }
+                    pd.body.style.overflow = 'auto';
+                    pd.documentElement.style.overflow = 'auto';
+                    pd.body.style.background = '#ffffff';
+                } else {
+                    fix();
                 }
             } catch(pe) {}
         });
