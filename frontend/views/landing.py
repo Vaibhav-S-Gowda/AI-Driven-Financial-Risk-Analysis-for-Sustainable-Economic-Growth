@@ -1,5 +1,7 @@
 import streamlit as st
 import os
+import base64
+import re
 import streamlit.components.v1 as components
 
 def push_nav_to_url(val: str):
@@ -11,9 +13,9 @@ def push_nav_to_url(val: str):
 def render_landing():
     # Hidden button mechanism: Javascript will 'click' this if direct top-level navigation fails
     st.markdown("<div id='st-hidden-btn-container'>", unsafe_allow_html=True)
-    if st.button("hidden_login", key="landing_hidden_login_trigger"):
-        st.session_state["page"] = "login"
-        push_nav_to_url("login")
+    if st.button("hidden_dashboard", key="landing_hidden_dashboard_trigger"):
+        st.session_state["page"] = "dashboard"
+        push_nav_to_url("dashboard")
         st.rerun()
     st.markdown("</div>", unsafe_allow_html=True)
 
@@ -91,6 +93,30 @@ def render_landing():
         html_content = html_content.replace('<!-- CSS_INJECTION_HOOK -->', css_content)
         html_content = html_content.replace('<!-- JS_INJECTION_HOOK -->', js_content)
         
+        # Embed images as base64 data URIs (iframe can't resolve relative paths)
+        assets_dir = os.path.join(base_dir, "..", "assets")
+        def replace_asset_url(match):
+            prefix = match.group(1)
+            path = match.group(2)
+            suffix = match.group(3)
+            # Resolve the actual file path
+            asset_path = os.path.join(assets_dir, os.path.basename(path))
+            if not os.path.exists(asset_path):
+                # Try the path as-is relative to frontend/
+                asset_path = os.path.join(base_dir, "..", path)
+            if os.path.exists(asset_path):
+                ext = os.path.splitext(asset_path)[1].lower()
+                mime = {"png": "image/png", "jpg": "image/jpeg", "jpeg": "image/jpeg", "gif": "image/gif", "svg": "image/svg+xml", "webp": "image/webp"}.get(ext.lstrip("."), "image/png")
+                with open(asset_path, "rb") as img_f:
+                    b64 = base64.b64encode(img_f.read()).decode()
+                return f"{prefix}data:{mime};base64,{b64}{suffix}"
+            return match.group(0)
+        
+        # Match url('assets/...') and src="assets/..." patterns  
+        html_content = re.sub(r"""(url\(['"]?)((?:\.?/?)assets/[^'")]+)(['"]?\))""", replace_asset_url, html_content)
+        html_content = re.sub(r"""(src=['"])((?:\.?/?)assets/[^'"]+)(['"])""", replace_asset_url, html_content)
+        html_content = re.sub(r"""(href=['"])((?:\.?/?)assets/[^'"]+)(['"])""", replace_asset_url, html_content)
+
         # Inject popstate listener for browser back/forward support
         popstate_script = """
 <script>
