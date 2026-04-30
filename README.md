@@ -1,15 +1,3 @@
----
-title: FinRisk AI
-emoji: 📊
-colorFrom: blue
-colorTo: green
-sdk: streamlit
-sdk_version: "1.45.1"
-app_file: backend/app.py
-pinned: false
-license: mit
----
-
 <div align="center">
   <img src="https://img.shields.io/badge/Status-Production%20Ready-success?style=for-the-badge" alt="Production Ready">
   <img src="https://img.shields.io/badge/Python-3.11+-blue?style=for-the-badge&logo=python" alt="Python">
@@ -25,20 +13,20 @@ license: mit
   <i>Bridging the gap between traditional credit risk assessment and ESG-aware investment intelligence using Machine Learning.</i>
 </p>
 
-## 📊 Project Dashboard
+## Project Dashboard
 [![FinRisk AI Preview](./frontend/assets/dashboard-og.png)](https://finriskai.streamlit.app/?nav=dashboard)
 *Click the image above to view the live interactive dashboard.*
 
 ---
 
-## 🛠️ Deployment
+## Deployment
 The application is built using Streamlit and is currently hosted on Streamlit Community Cloud.
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://finriskai.streamlit.app/?nav=dashboard)
 
 ---
 
-## 🔍 The Problem
+## The Problem
 
 Financial institutions today face a **dual challenge** that traditional risk models were never designed to handle:
 
@@ -54,13 +42,13 @@ Financial institutions today face a **dual challenge** that traditional risk mod
 
 ---
 
-## 💡 The Solution
+## The Solution
 
 This project delivers a **single-page, AI-powered dashboard** that unifies three pillars of modern financial intelligence:
 
 ```mermaid
 graph LR
-    A["📊 Credit Risk<br/>ML Classification"] --> D["🎯 Unified<br/>Risk Intelligence"]
+    A[" Credit Risk<br/>ML Classification"] --> D[" Unified<br/>Risk Intelligence"]
     B["🌿 ESG Analysis<br/>World Bank Data"] --> D
     C["🎲 Monte Carlo<br/>Portfolio Simulation"] --> D
     D --> E["💼 Better<br/>Investment Decisions"]
