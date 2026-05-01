@@ -585,16 +585,27 @@ def _build_dashboard_data(
             yearly = esg_df.copy()
             yearly["pillar"] = yearly["Indicator name"].map(ind_map)
             yearly = yearly.dropna(subset=["pillar"])
-            year_agg = yearly.groupby("Year")["Value"].mean()
-            # Forward fill to prevent massive drops from missing data in recent years
-            year_agg = year_agg.replace(0, np.nan).ffill()
-            recent_years = sorted(year_agg.index)[-6:]
+            
+            # Unstack to get indicators as columns, forward fill missing years
+            global_trend = yearly.groupby(["Year", "Indicator name"])["Value"].mean().unstack().ffill()
+            
+            # Normalize each indicator globally to 0-100 scale over time
+            mn, mx = global_trend.min(), global_trend.max()
+            diff = mx - mn
+            diff[diff == 0] = 1.0 # Avoid division by zero
+            norm = (global_trend - mn) / diff * 100
+            
+            # Average normalized indicators for each year
+            score_over_time = norm.mean(axis=1)
+            recent_years = sorted(score_over_time.index)[-6:]
+            
             if len(recent_years) >= 3:
                 trend_vals = []
-                # Scale the raw aggregated trend to match the current 0-100 avg_esg scale
-                scale_factor = avg_esg / year_agg.loc[recent_years[-1]] if year_agg.loc[recent_years[-1]] != 0 else 1
+                # Scale to end exactly at avg_esg computed previously
+                scale_factor = avg_esg / score_over_time.loc[recent_years[-1]] if score_over_time.loc[recent_years[-1]] > 0 else 1
                 for y in recent_years:
-                    trend_vals.append(round(float(year_agg.loc[y] * scale_factor), 1))
+                    val = round(float(score_over_time.loc[y] * scale_factor), 1)
+                    trend_vals.append(min(99.0, val))
                 data["esg_trend"] = {
                     "labels": [str(y) for y in recent_years],
                     "data": trend_vals
@@ -605,8 +616,8 @@ def _build_dashboard_data(
             # Insight 1: Year-over-year change
             if len(recent_years) >= 2:
                 prev_y, curr_y = recent_years[-2], recent_years[-1]
-                if year_agg[prev_y] > 0:
-                    yoy = ((year_agg[curr_y] - year_agg[prev_y]) / year_agg[prev_y]) * 100
+                if score_over_time.loc[prev_y] > 0:
+                    yoy = ((score_over_time.loc[curr_y] - score_over_time.loc[prev_y]) / score_over_time.loc[prev_y]) * 100
                     direction = "improved" if yoy > 0 else "declined"
                     insights.append(
                         f"Global sustainability indicators {direction} by {abs(yoy):.1f}% from {prev_y} to {curr_y}."
