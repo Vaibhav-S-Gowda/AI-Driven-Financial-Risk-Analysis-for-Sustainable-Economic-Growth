@@ -107,6 +107,10 @@ loader.markdown(LOADING_HTML, unsafe_allow_html=True)
 def load_assets():
     base_dir = os.path.dirname(__file__)
     processor = joblib.load(os.path.join(base_dir, "models", "data_processor.pkl"))
+    
+    # Override the absolute base_path stored in the pickle with the correct dynamic path
+    processor.base_path = os.path.join(base_dir, "..", "data")
+    
     credit_df = processor.load_credit_risk_data()
     credit_df = processor.preprocess_credit_risk(credit_df, training=False)
     fin_df = processor.load_financial_data()
