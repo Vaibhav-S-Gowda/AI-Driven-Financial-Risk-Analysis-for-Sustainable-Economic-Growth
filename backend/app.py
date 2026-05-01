@@ -105,9 +105,10 @@ loader.markdown(LOADING_HTML, unsafe_allow_html=True)
 # --- Asset Loading (cached — only runs if dashboard is open) ---
 @st.cache_resource
 def load_assets():
-    processor = DataProcessor()
+    base_dir = os.path.dirname(__file__)
+    processor = joblib.load(os.path.join(base_dir, "models", "data_processor.pkl"))
     credit_df = processor.load_credit_risk_data()
-    credit_df = processor.preprocess_credit_risk(credit_df, training=True)
+    credit_df = processor.preprocess_credit_risk(credit_df, training=False)
     fin_df = processor.load_financial_data()
     esg_df = processor.load_esg_data()
     esg_df = esg_df[esg_df["Indicator name"].isin(SUSTAINABLE_INDICATORS)]
