@@ -40,10 +40,19 @@ class DataProcessor:
         return df
 
     def load_esg_data(self):
-        file_path = os.path.join(self.base_path, "esgdata_download-2026-01-09.xlsx")
-        xl = pd.ExcelFile(file_path)
-        sheet_name = 'Data' if 'Data' in xl.sheet_names else xl.sheet_names[0]
-        df = pd.read_excel(file_path, sheet_name=sheet_name)
+        import glob
+        csv_files = glob.glob(os.path.join(self.base_path, "esgdata*.csv"))
+        if csv_files:
+            file_path = csv_files[0]
+            df = pd.read_csv(file_path, low_memory=False)
+        else:
+            xlsx_files = glob.glob(os.path.join(self.base_path, "esgdata*.xlsx"))
+            if not xlsx_files:
+                raise FileNotFoundError("No ESG data file found in data directory.")
+            file_path = xlsx_files[0]
+            xl = pd.ExcelFile(file_path)
+            sheet_name = 'Data' if 'Data' in xl.sheet_names else xl.sheet_names[0]
+            df = pd.read_excel(file_path, sheet_name=sheet_name)
         
         # Melt year columns into a single 'Year' column
         year_cols = [col for col in df.columns if col.isdigit()]
