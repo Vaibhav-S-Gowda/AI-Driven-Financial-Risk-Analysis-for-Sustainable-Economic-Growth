@@ -22,10 +22,9 @@ def train_clustering():
     df['Cluster'] = clusters
     
     # Save model and scaler
-    if not os.path.exists("models"):
-        os.makedirs("models")
-    joblib.dump(kmeans, "models/clustering_model.pkl")
-    joblib.dump(scaler, "models/clustering_scaler.pkl")
+    base_dir = os.path.dirname(__file__)
+    joblib.dump(kmeans, os.path.join(base_dir, "clustering_model.pkl"))
+    joblib.dump(scaler, os.path.join(base_dir, "clustering_scaler.pkl"))
     
     print("Clustering complete. Model saved.")
     print(f"Cluster summary:\n{df.groupby('Cluster').mean(numeric_only=True)}")
