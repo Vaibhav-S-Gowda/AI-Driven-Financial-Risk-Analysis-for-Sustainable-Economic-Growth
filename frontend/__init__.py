@@ -1,1 +1,0 @@
-# FinRisk AI Frontend
