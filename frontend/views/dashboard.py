@@ -224,9 +224,11 @@ def _safe_r2(model, df: pd.DataFrame) -> str:
     try:
         from sklearn.metrics import r2_score
         target_c = next(
-            c for c in df.columns
-            if any(kw in c.lower() for kw in ("target", "price", "value", "revenue"))
+            (c for c in df.columns
+            if any(kw in c.lower() for kw in ("target", "price", "value", "revenue"))),
+            None
         )
+        if not target_c: return "—"
         features = df.select_dtypes(include="number").drop(columns=[target_c], errors="ignore")
         if features.empty: return "—"
         return f"{r2_score(df[target_c], model.predict(features)):.3f}"
@@ -285,6 +287,7 @@ def _feature_importances(model, df: pd.DataFrame) -> pd.DataFrame:
         return pd.DataFrame()
 
 def _build_dashboard_data(
+    processor: Any,
     credit_df: pd.DataFrame,
     fin_df: pd.DataFrame,
     esg_df: pd.DataFrame,
@@ -355,7 +358,14 @@ def _build_dashboard_data(
                 "values": [round(float(v), 2) for v in sector_risk.values]
             }
             # Find highest risk sector for insight
-            data["sector_risk_insight"] = f"{sector_risk.index[0]} sector contributes the highest risk ({sector_risk.values[0]:.1f})"
+            try:
+                if hasattr(processor, "label_encoders") and "loan_intent" in processor.label_encoders:
+                    sector_name = processor.label_encoders["loan_intent"].inverse_transform([int(sector_risk.index[0])])[0]
+                else:
+                    sector_name = str(sector_risk.index[0])
+            except Exception:
+                sector_name = str(sector_risk.index[0])
+            data["sector_risk_insight"] = f"{sector_name} sector contributes the highest risk ({sector_risk.values[0]:.1f})"
 
     # ── Overview: Top Risky Entities Table ────────────────────────────────
     if credit_df is not None and not credit_df.empty:
@@ -576,11 +586,15 @@ def _build_dashboard_data(
             yearly["pillar"] = yearly["Indicator name"].map(ind_map)
             yearly = yearly.dropna(subset=["pillar"])
             year_agg = yearly.groupby("Year")["Value"].mean()
+            # Forward fill to prevent massive drops from missing data in recent years
+            year_agg = year_agg.replace(0, np.nan).ffill()
             recent_years = sorted(year_agg.index)[-6:]
             if len(recent_years) >= 3:
                 trend_vals = []
+                # Scale the raw aggregated trend to match the current 0-100 avg_esg scale
+                scale_factor = avg_esg / year_agg.loc[recent_years[-1]] if year_agg.loc[recent_years[-1]] != 0 else 1
                 for y in recent_years:
-                    trend_vals.append(round(float(year_agg[y]), 1))
+                    trend_vals.append(round(float(year_agg.loc[y] * scale_factor), 1))
                 data["esg_trend"] = {
                     "labels": [str(y) for y in recent_years],
                     "data": trend_vals
@@ -672,6 +686,7 @@ def render_dashboard(
 ) -> None:
     # Build data for all sections, then render the single HTML dashboard.
     dashboard_data = _build_dashboard_data(
+        processor=processor,
         credit_df=credit_df,
         fin_df=fin_df,
         esg_df=esg_df,
