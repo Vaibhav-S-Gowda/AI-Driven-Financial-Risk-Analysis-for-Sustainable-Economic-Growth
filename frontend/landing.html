@@ -553,9 +553,9 @@
 
         .split-section {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 6rem;
-            max-width: 1300px;
+            max-width: 900px;
             margin: 0 auto;
             align-items: center;
         }
@@ -638,10 +638,12 @@
 
         .testi-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 5rem;
             align-items: center;
-            text-align: left;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .testi-logo {
@@ -975,7 +977,7 @@
         </div>
         <div class="nav-actions">
             <button class="btn-outline" onclick="navigateTo('dashboard')">Dashboard</button>
-            <button class="btn-primary" onclick="window.location.href='mailto:contact@finrisk.ai'">Get in touch</button>
+            <button class="btn-primary" onclick="window.parent.location.href='mailto:contact@finrisk.ai'">Get in touch</button>
         </div>
     </nav>
 
@@ -1102,7 +1104,6 @@
                     </div>
                 </div>
             </div>
-            <div class="split-image-ph reveal-scale" style="background: url('assets/split-visual.png') center/cover; box-shadow: 0 20px 40px rgba(0,0,0,0.2);"></div>
         </section>
 
         <section class="split-two reveal-up">
@@ -1116,7 +1117,6 @@
                     <button class="btn-primary" onclick="navigateTo('dashboard')">View case study</button>
                     <div class="testi-author">Jeniffer Kolobaly <span>— CTO EV Medtronic</span></div>
                 </div>
-                <div class="split-image-ph reveal-scale reveal-delay-2" style="height:400px; background: url('assets/testimonial-visual.png') center/cover; box-shadow: 0 20px 40px rgba(0,0,0,0.2);"></div>
             </div>
         </section>
     </div>
@@ -1135,7 +1135,7 @@
             <div class="footer-right reveal-up reveal-delay-2">
                 <p>By increasing the effectiveness and efficiency of financial analysis, the use of predictive
                     intelligence is highly profitable for all institutions.</p>
-                <a href="mailto:contact@finrisk.ai" class="btn-white">Get in touch ↗</a>
+                <a href="mailto:contact@finrisk.ai" class="btn-white" target="_parent">Get in touch ↗</a>
             </div>
         </div>
         <div class="footer-bottom">
