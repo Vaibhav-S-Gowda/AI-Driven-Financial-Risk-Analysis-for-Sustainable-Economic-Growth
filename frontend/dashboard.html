@@ -1538,7 +1538,7 @@ body {
       <div id="cluTable" style="margin-top:10px;overflow-x:auto"><p style="color:var(--text-2);font-size:13px">Loading cluster data...</p></div>
     </div>
     <div class="saas-card">
-      <div class="card-header"><div class="card-title">Gradient Descent</div></div>
+      <div class="card-header"><div class="card-title">Cluster Data Distribution (3D)</div></div>
       <div id="cluPlotlyWrap" style="height:420px;position:relative;"></div>
       <div style="text-align:center; margin-top:8px; margin-bottom:12px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
         <span style="font-family: serif; font-size: 15px; background: #fff; padding: 6px 12px; border-radius: 6px; border: 1px solid #e5e7eb; display: inline-block; color: #000;">
@@ -2296,7 +2296,7 @@ function renderSectionData(id) {
              }]},
              options: { responsive: true, maintainAspectRatio: false, 
                  plugins:{legend:{display:false}},
-                 scales: {x:{grid:{display:false}}, y:{grid:{color:'rgba(0,0,0,0.04)', drawBorder:false}}}
+                 scales: {x:{grid:{display:false}}, y:{min: 0, max: 100, grid:{color:'rgba(0,0,0,0.04)', drawBorder:false}}}
              }
          });
       }
@@ -2866,6 +2866,7 @@ async function runSimulation(scenario="A") {
   // Done — update UI
   btn.classList.remove("loading");
   btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg> Run Simulation`;
+  if(typeof progressTimer !== 'undefined') clearInterval(progressTimer);
   setProgress(100, params.nSims);
 
   if(isA) {
@@ -3215,35 +3216,11 @@ window.addEventListener("load", () => setTimeout(()=>runSimulation("A"), 400));
 // ─── Navigation ───────────────────────────────────────────────────────────────
 function goHome() {
   try {
-      if (window.parent && window.parent.document) {
-          var btns = window.parent.document.querySelectorAll('button');
-          for (var i = 0; i < btns.length; i++) {
-              if (btns[i].textContent.includes('hidden_landing')) {
-                  btns[i].click();
-                  
-                  // Hide this iframe instantly for a smooth transition
-                  var frames = window.parent.document.querySelectorAll('iframe');
-                  for (var j = 0; j < frames.length; j++) {
-                      if (frames[j].contentWindow === window) {
-                          frames[j].style.opacity = '0';
-                          setTimeout(() => { frames[j].style.display = 'none'; }, 50);
-                      }
-                  }
-                  window.parent.document.body.style.overflow = 'auto';
-                  window.parent.document.documentElement.style.overflow = 'auto';
-                  return;
-              }
-          }
+      if (window.parent) {
+          window.parent.location.href = '?nav=landing';
       }
-  } catch(e) {}
-
-  // Fallback if Streamlit button isn't found
-  try {
-      var url = new URL(window.parent.location.href);
-      url.searchParams.set('nav', 'landing');
-      window.parent.location.href = url.toString();
   } catch(e) {
-      window.location.href = "/?nav=landing";
+      window.location.href = '?nav=landing';
   }
 }
 
