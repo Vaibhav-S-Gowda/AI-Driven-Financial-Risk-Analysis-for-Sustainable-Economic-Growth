@@ -48,10 +48,10 @@ This project delivers a **single-page, AI-powered dashboard** that unifies three
 
 ```mermaid
 graph LR
-    A[" Credit Risk<br/>ML Classification"] --> D[" Unified<br/>Risk Intelligence"]
-    B["🌿 ESG Analysis<br/>World Bank Data"] --> D
-    C["🎲 Monte Carlo<br/>Portfolio Simulation"] --> D
-    D --> E["💼 Better<br/>Investment Decisions"]
+    A["Credit Risk<br/>ML Classification"] --> D["Unified<br/>Risk Intelligence"]
+    B["ESG Analysis<br/>World Bank Data"] --> D
+    C["Monte Carlo<br/>Portfolio Simulation"] --> D
+    D --> E["Better<br/>Investment Decisions"]
 
     style A fill:#3B82F6,color:#fff,stroke:#1E40AF
     style B fill:#10B981,color:#fff,stroke:#047857
@@ -72,32 +72,32 @@ graph LR
 
 ---
 
-## ✨ Features
+## Features
 
-### 📊 Platform Overview
+### Platform Overview
 - Real-time KPIs: Portfolio Value, AI Risk Score, ESG Average, High-Risk Entity %
 - ML model performance cards with AUC, Confusion Matrix, Accuracy/Precision/Recall
 - Explainable AI feature importance (SHAP-style bar charts)
 - Interactive risk entity table with sorting, filtering, and pagination
 
-### 🛡️ Credit Risk Analysis
+### Credit Risk Analysis
 - `RandomForestClassifier` for binary default prediction (AUC > 0.9)
 - `RandomForestRegressor` for continuous risk score projection
 - Feature importance visualization showing top risk drivers
 - Confusion matrix with True Positive / False Negative breakdown
 
-### 🌿 ESG & Sustainability Intelligence
+### ESG & Sustainability Intelligence
 - Real World Bank indicators: CO₂ emissions, energy use, electricity access, unemployment, internet penetration
 - Normalized 0-100 pillar scores for Environment, Social, Governance
 - Radar chart visualization and year-over-year trend analysis
 - 3D scatter plot of economy-level ESG performance
 
-### 🟢 Financial Clustering Lab
+### Financial Clustering Lab
 - `K-Means` segmentation into risk-ESG quadrants
 - 3D Plotly visualization of cluster distributions
 - Cluster average comparison table (Income, Credit Score, Spending, Transactions)
 
-### 🎲 Monte Carlo Simulation Engine
+### Monte Carlo Simulation Engine
 - Geometric Brownian Motion (GBM) portfolio projection
 - Computes VaR (95%), Probability of Profit, P5/P95 confidence bands
 - Side-by-side scenario comparison (Scenario A vs B)
@@ -105,7 +105,7 @@ graph LR
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 ```mermaid
 graph TD
@@ -152,7 +152,7 @@ graph TD
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 AI-Driven-Financial-Risk-Analysis/
@@ -171,11 +171,9 @@ AI-Driven-Financial-Risk-Analysis/
 ├── frontend/
 │   ├── dashboard.html            # Main SaaS dashboard (all 5 modules)
 │   ├── landing.html / .css / .js # Landing page
-│   ├── signin.html / .css / .js  # Authentication page
 │   └── views/
 │       ├── dashboard.py          # Python → JSON data pipeline
-│       ├── landing.py            # Landing page renderer
-│       └── signin.py             # Sign-in page renderer
+│       └── landing.py            # Landing page renderer
 ├── data/
 │   ├── credit_risk_dataset.csv   # 32K loan records with default labels
 │   ├── financial_dataset.csv     # 1K entity financial profiles
@@ -185,7 +183,7 @@ AI-Driven-Financial-Risk-Analysis/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - **Python** 3.9+
@@ -202,15 +200,14 @@ cd AI-Driven-Financial-Risk-Analysis
 pip install pandas numpy scikit-learn streamlit plotly openpyxl joblib
 
 # 3. Launch
-cd backend
-streamlit run app.py
+streamlit run backend/app.py
 ```
 
 The dashboard opens at `http://localhost:8501`.
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 | Layer | Technologies | Purpose |
 |-------|-------------|---------|
@@ -222,7 +219,7 @@ The dashboard opens at `http://localhost:8501`.
 
 ---
 
-## 📊 Model Performance
+## Model Performance
 
 | Model | Task | Key Metric |
 |-------|------|------------|
@@ -232,7 +229,7 @@ The dashboard opens at `http://localhost:8501`.
 
 ---
 
-## 🔒 License
+## License
 
 This project is open-sourced under the **MIT License**.
 
