@@ -24,10 +24,9 @@ def train_regression():
     print(f"Regression MSE: {mean_squared_error(y_test, y_pred)}")
     
     # Save the model and the processor
-    if not os.path.exists("models"):
-        os.makedirs("models")
-    joblib.dump(model, "models/regression_model.pkl")
-    joblib.dump(processor, "models/data_processor.pkl")
+    base_dir = os.path.dirname(__file__)
+    joblib.dump(model, os.path.join(base_dir, "regression_model.pkl"))
+    joblib.dump(processor, os.path.join(base_dir, "data_processor.pkl"))
     return model
 
 if __name__ == "__main__":
