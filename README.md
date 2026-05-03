@@ -144,8 +144,8 @@ graph TD
 
     subgraph "Application Layer"
         APP["Streamlit Backend<br/><i>app.py — routing & model loading</i>"]:::server
-        DASH["dashboard.py<br/><i>Data aggregation & JSON serialization</i>"]:::server
-        LAND["landing.py<br/><i>Landing page renderer</i>"]:::server
+        DASH["views/dashboard.py<br/><i>Data aggregation & JSON serialization</i>"]:::server
+        LAND["views/landing.py<br/><i>Landing page renderer</i>"]:::server
     end
 
     subgraph "Presentation Layer"
@@ -191,15 +191,18 @@ AI-Driven-Financial-Risk-Analysis/
 │   ├── app.py                        # Streamlit entry point & URL-based routing
 │   ├── config.py                     # ESG indicator configuration (8 World Bank indicators)
 │   ├── data_processor.py             # Data loading, encoding, feature engineering
-│   └── models/
-│       ├── classification_engine.py  # RandomForestClassifier training script
-│       ├── classification_model.pkl  # Trained classifier (~1.4 MB)
-│       ├── regression_engine.py      # RandomForestRegressor training script
-│       ├── regression_model.pkl      # Trained regressor (~92 MB)
-│       ├── clustering_engine.py      # KMeans training script
-│       ├── clustering_model.pkl      # Trained KMeans
-│       ├── clustering_scaler.pkl     # StandardScaler for clustering features
-│       └── data_processor.pkl        # Serialized DataProcessor with fitted encoders
+│   ├── models/
+│   │   ├── classification_engine.py  # RandomForestClassifier training script
+│   │   ├── classification_model.pkl  # Trained classifier (~1.4 MB)
+│   │   ├── regression_engine.py      # RandomForestRegressor training script
+│   │   ├── regression_model.pkl      # Trained regressor (~92 MB)
+│   │   ├── clustering_engine.py      # KMeans training script
+│   │   ├── clustering_model.pkl      # Trained KMeans
+│   │   ├── clustering_scaler.pkl     # StandardScaler for clustering features
+│   │   └── data_processor.pkl        # Serialized DataProcessor with fitted encoders
+│   └── views/
+│       ├── dashboard.py              # Python → JSON data pipeline (700+ lines)
+│       └── landing.py                # Landing page renderer with base64 image inlining
 ├── frontend/
 │   ├── dashboard.html                # Main SaaS dashboard (6 modules, 794 lines)
 │   ├── dashboard.css                 # Dashboard styles (~44 KB)
@@ -207,13 +210,10 @@ AI-Driven-Financial-Risk-Analysis/
 │   ├── landing.html                  # Marketing landing page
 │   ├── landing.css                   # Landing page styles
 │   ├── landing.js                    # Landing page interactions
-│   ├── assets/
-│   │   ├── favicon.png               # App favicon
-│   │   ├── dashboard-og.png          # OG meta image for social sharing
-│   │   └── hero-card.png             # Landing page hero image
-│   └── views/
-│       ├── dashboard.py              # Python → JSON data pipeline (700+ lines)
-│       └── landing.py                # Landing page renderer with base64 image inlining
+│   └── assets/
+│       ├── favicon.png               # App favicon
+│       ├── dashboard-og.png          # OG meta image for social sharing
+│       └── hero-card.png             # Landing page hero image
 ├── data/
 │   ├── credit_risk_dataset.csv       # 32K loan records with default labels (~1.8 MB)
 │   ├── financial_dataset.csv         # 1K entity financial profiles (~60 KB)

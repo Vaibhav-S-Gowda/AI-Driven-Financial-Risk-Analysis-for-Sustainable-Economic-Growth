@@ -7,9 +7,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 
 from data_processor import DataProcessor
-from frontend.views.landing import render_landing
+from backend.views.landing import render_landing
 
-from frontend.views.dashboard import render_dashboard
+from backend.views.dashboard import render_dashboard
 from backend.config import SUSTAINABLE_INDICATORS
 
 from PIL import Image

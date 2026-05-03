@@ -73,10 +73,10 @@ def render_landing():
     # Listener removed: direct navigation handled within landing.html
 
     # Render the landing page HTML
-    base_dir = os.path.dirname(__file__)
-    landing_path = os.path.join(base_dir, "..", "landing.html")
-    css_path = os.path.join(base_dir, "..", "landing.css")
-    js_path = os.path.join(base_dir, "..", "landing.js")
+    frontend_dir = os.path.join(os.path.dirname(__file__), "..", "..", "frontend")
+    landing_path = os.path.join(frontend_dir, "landing.html")
+    css_path = os.path.join(frontend_dir, "landing.css")
+    js_path = os.path.join(frontend_dir, "landing.js")
     
     if os.path.exists(landing_path):
         with open(landing_path, "r", encoding="utf-8") as f:
@@ -94,7 +94,7 @@ def render_landing():
         html_content = html_content.replace('<!-- JS_INJECTION_HOOK -->', js_content)
         
         # Embed images as base64 data URIs (iframe can't resolve relative paths)
-        assets_dir = os.path.join(base_dir, "..", "assets")
+        assets_dir = os.path.join(frontend_dir, "assets")
         def replace_asset_url(match):
             prefix = match.group(1)
             path = match.group(2)
@@ -103,7 +103,7 @@ def render_landing():
             asset_path = os.path.join(assets_dir, os.path.basename(path))
             if not os.path.exists(asset_path):
                 # Try the path as-is relative to frontend/
-                asset_path = os.path.join(base_dir, "..", path)
+                asset_path = os.path.join(frontend_dir, path)
             if os.path.exists(asset_path):
                 ext = os.path.splitext(asset_path)[1].lower()
                 mime = {"png": "image/png", "jpg": "image/jpeg", "jpeg": "image/jpeg", "gif": "image/gif", "svg": "image/svg+xml", "webp": "image/webp"}.get(ext.lstrip("."), "image/png")

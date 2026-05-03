@@ -73,7 +73,7 @@ def _render_html_dashboard(dashboard_data: dict | None = None) -> None:
     """, unsafe_allow_html=True)
 
     frontend_dir = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), ".."
+        os.path.dirname(os.path.abspath(__file__)), "..", "..", "frontend"
     )
     html_path = os.path.join(frontend_dir, "dashboard.html")
     css_path = os.path.join(frontend_dir, "dashboard.css")
