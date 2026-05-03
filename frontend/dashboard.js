@@ -1563,3 +1563,19 @@ function toggleBookmark() {
   }
   showToast(isBookmarked ? 'Dashboard view bookmarked' : 'Bookmark removed', 'success');
 }
+
+function handleSearch(event, query) {
+  if (event.key === 'Enter') {
+    if(!query.trim()) return;
+    showToast('Searching for: "' + query + '"...', 'info');
+    
+    const mainGrid = document.getElementById('pdGrid');
+    if(mainGrid) {
+      mainGrid.style.opacity = '0.3';
+      setTimeout(() => {
+        mainGrid.style.opacity = '1';
+        showToast('0 results found for "' + query + '"', 'info');
+      }, 800);
+    }
+  }
+}

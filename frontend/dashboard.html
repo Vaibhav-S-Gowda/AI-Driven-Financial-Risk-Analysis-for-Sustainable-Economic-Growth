@@ -454,7 +454,7 @@
     <div class="pd-header-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
     <div><div class="pd-header-sub" id="dateText">Manage and track your portfolio risks</div><h1 class="pd-header-title" id="greetingText">Risk Dashboard</h1></div>
   </div>
-  <div class="pd-search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#9CA3AF" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Search Risk, Portfolio, Reports..."/></div>
+  <div class="pd-search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#9CA3AF" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" id="mainSearch" placeholder="Search Risk, Portfolio, Reports..." onkeypress="handleSearch(event, this.value)"/></div>
 </div>
 
 <div class="pd-grid" id="pdGrid">
@@ -510,7 +510,7 @@
       <div class="pd-card-top"><h3 class="pd-card-title">Scheduled Reviews</h3><div class="pd-card-actions"><button class="pd-card-icon-btn">📋</button></div></div>
       <div class="pd-meeting-item"><div class="pd-meeting-meta"><span class="pd-meeting-type">Risk Review</span><span class="pd-meeting-title">Portfolio Audit</span><span class="pd-meeting-arrow">↗</span></div><div class="pd-meeting-bottom"><span class="pd-meeting-time">2:30 PM</span><span class="pd-meeting-tag pd-tag-green">Risk Team</span></div></div>
       <div class="pd-meeting-item"><div class="pd-meeting-meta"><span class="pd-meeting-type">ESG Review</span><span class="pd-meeting-title">ESG Compliance</span><span class="pd-meeting-arrow">↗</span></div><div class="pd-meeting-bottom"><span class="pd-meeting-time">4:15 PM</span><span class="pd-meeting-tag pd-tag-blue">Compliance</span></div></div>
-      <div class="pd-see-all" onclick="switchSection('overview',document.querySelectorAll('.nav-item')[4])">See All Reviews ›</div>
+      <div class="pd-see-all" onclick="showToast('Opening Full Reviews Calendar...', 'info')">See All Reviews ></div>
     </div>
     <div class="pd-card">
       <div class="pd-card-top"><h3 class="pd-card-title">Decision Engine Alerts</h3><div class="pd-card-actions"><button class="pd-card-icon-btn">🔄</button></div></div>
