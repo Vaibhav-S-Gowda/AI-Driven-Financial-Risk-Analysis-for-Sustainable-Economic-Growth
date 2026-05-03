@@ -1472,3 +1472,68 @@ window.addEventListener('load', function() {
     if(document.getElementById('wiIncome')) updateSimulator();
   });
 })();
+
+/* Topbar Functionalities */
+function showToast(message, type = 'success') {
+  let container = document.getElementById('toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'toast-container';
+    container.className = 'toast-container';
+    document.body.appendChild(container);
+  }
+  
+  const toast = document.createElement('div');
+  toast.className = 'toast toast-' + type;
+  toast.innerHTML = '<div class="toast-icon">' + (type === 'success' ? '?' : 'i') + '</div><div>' + message + '</div>';
+  
+  container.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.classList.add('toast-exit');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+function filterData(btn, timeframe) {
+  btn.parentElement.querySelectorAll('.pd-tab').forEach(t => t.classList.remove('pd-tab-active'));
+  btn.classList.add('pd-tab-active');
+  showToast('Data filtered by: ' + timeframe, 'success');
+  
+  const mainGrid = document.getElementById('pdGrid');
+  if(mainGrid) {
+    mainGrid.style.opacity = '0.5';
+    mainGrid.style.pointerEvents = 'none';
+    setTimeout(() => {
+      mainGrid.style.opacity = '1';
+      mainGrid.style.pointerEvents = 'auto';
+    }, 600);
+  }
+}
+
+function generateReport() {
+  showToast('Generating Report PDF...', 'info');
+  setTimeout(() => {
+    showToast('Report downloaded successfully!', 'success');
+  }, 1500);
+}
+
+function readNotifications() {
+  const dot = document.getElementById('notifDot');
+  if(dot && dot.style.display !== 'none') {
+    dot.style.display = 'none';
+    showToast('You have 3 unread alerts', 'info');
+  } else {
+    showToast('No new notifications', 'info');
+  }
+}
+
+let isBookmarked = false;
+function toggleBookmark() {
+  isBookmarked = !isBookmarked;
+  const icon = document.getElementById('bookmarkIcon');
+  if(icon) {
+    icon.setAttribute('fill', isBookmarked ? 'currentColor' : 'none');
+  }
+  showToast(isBookmarked ? 'Dashboard view bookmarked' : 'Bookmark removed', 'success');
+}

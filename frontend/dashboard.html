@@ -435,16 +435,16 @@
 <div class="pd-topbar fade-up">
   <div class="pd-brand"><span class="pd-logo">◈</span><span class="pd-brand-text">FinRisk</span></div>
   <div class="pd-tabs-wrap">
-    <button class="pd-tab" onclick="this.parentElement.querySelectorAll('.pd-tab').forEach(t=>t.classList.remove('pd-tab-active'));this.classList.add('pd-tab-active')">Today</button>
-    <button class="pd-tab" onclick="this.parentElement.querySelectorAll('.pd-tab').forEach(t=>t.classList.remove('pd-tab-active'));this.classList.add('pd-tab-active')">This Week</button>
-    <button class="pd-tab pd-tab-active" onclick="this.parentElement.querySelectorAll('.pd-tab').forEach(t=>t.classList.remove('pd-tab-active'));this.classList.add('pd-tab-active')">This Month</button>
-    <button class="pd-tab" onclick="this.parentElement.querySelectorAll('.pd-tab').forEach(t=>t.classList.remove('pd-tab-active'));this.classList.add('pd-tab-active')">Reports</button>
+    <button class="pd-tab" onclick="filterData(this, 'Today')">Today</button>
+    <button class="pd-tab" onclick="filterData(this, 'This Week')">This Week</button>
+    <button class="pd-tab pd-tab-active" onclick="filterData(this, 'This Month')">This Month</button>
+    <button class="pd-tab" onclick="generateReport()">Reports</button>
   </div>
   <div class="pd-topbar-actions">
-    <button class="pd-icon-btn" id="calendarBtn" onclick="toggleCalendar()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button>
-    <button class="pd-icon-btn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></button>
-    <button class="pd-icon-btn" style="position:relative"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="pd-notif-dot"></span></button>
-    <button class="pd-icon-btn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    <button class="pd-icon-btn" onclick="showToast('Opening Calendar...', 'info')"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button>
+    <button class="pd-icon-btn" onclick="showToast('No new messages', 'info')"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></button>
+    <button class="pd-icon-btn" style="position:relative" onclick="readNotifications()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="pd-notif-dot" id="notifDot"></span></button>
+    <button class="pd-icon-btn" onclick="toggleBookmark()"><svg id="bookmarkIcon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
     <div class="pd-user"><div class="pd-avatar-circle">VA</div><div><div class="pd-user-name">Vaibhav</div><div class="pd-user-role">Risk Analyst</div></div></div>
   </div>
 </div>
@@ -789,5 +789,6 @@
 </div>
 
 <script src="dashboard.js"></script>
+<div id="toast-container" class="toast-container"></div>
 </body>
 </html>
