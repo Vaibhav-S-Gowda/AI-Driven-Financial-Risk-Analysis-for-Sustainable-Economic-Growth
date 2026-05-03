@@ -72,9 +72,13 @@ def _render_html_dashboard(dashboard_data: dict | None = None) -> None:
     </style>
     """, unsafe_allow_html=True)
 
-    html_path = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), "..", "dashboard.html"
+    frontend_dir = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), ".."
     )
+    html_path = os.path.join(frontend_dir, "dashboard.html")
+    css_path = os.path.join(frontend_dir, "dashboard.css")
+    js_path = os.path.join(frontend_dir, "dashboard.js")
+
     if not os.path.exists(html_path):
         st.error(
             f"dashboard.html not found at: {os.path.abspath(html_path)}\n\n"
@@ -84,6 +88,22 @@ def _render_html_dashboard(dashboard_data: dict | None = None) -> None:
 
     with open(html_path, "r", encoding="utf-8") as fh:
         html = fh.read()
+
+    if os.path.exists(css_path):
+        with open(css_path, "r", encoding="utf-8") as fh:
+            css_content = fh.read()
+        html = html.replace(
+            '<link rel="stylesheet" href="dashboard.css">',
+            f"<style>\n{css_content}\n</style>"
+        )
+
+    if os.path.exists(js_path):
+        with open(js_path, "r", encoding="utf-8") as fh:
+            js_content = fh.read()
+        html = html.replace(
+            '<script src="dashboard.js"></script>',
+            f"<script>\n{js_content}\n</script>"
+        )
 
     html = re.sub(
         r'const BACKEND_URL\s*=\s*["\'].*?["\'];',
