@@ -371,6 +371,24 @@ def _build_dashboard_data(
     if credit_df is not None and not credit_df.empty:
         risk_col = "risk_score" if "risk_score" in credit_df.columns else None
         if risk_col:
+            # Calculate full portfolio distribution (quantiles)
+            q90 = credit_df[risk_col].quantile(0.90)
+            q50 = credit_df[risk_col].quantile(0.50)
+            data["risk_distribution"] = {
+                "high": int((credit_df[risk_col] > q90).sum()),
+                "medium": int(((credit_df[risk_col] <= q90) & (credit_df[risk_col] > q50)).sum()),
+                "low": int((credit_df[risk_col] <= q50).sum())
+            }
+            
+            # Calculate full portfolio buckets (absolute scores)
+            data["risk_buckets"] = {
+                "critical": int((credit_df[risk_col] >= 85).sum()),
+                "high": int(((credit_df[risk_col] >= 70) & (credit_df[risk_col] < 85)).sum()),
+                "moderate": int(((credit_df[risk_col] >= 50) & (credit_df[risk_col] < 70)).sum()),
+                "low": int(((credit_df[risk_col] >= 30) & (credit_df[risk_col] < 50)).sum()),
+                "review": int((credit_df[risk_col] < 30).sum())
+            }
+
             # Grab top 150 entities so the filters have substantial data to work with
             top_risky = credit_df.nlargest(150, risk_col).copy()
             sector_col = "loan_intent" if "loan_intent" in credit_df.columns else None
