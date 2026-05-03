@@ -1423,3 +1423,36 @@ body {
 @keyframes toast-exit {
   to { opacity: 0; transform: translateX(100%); }
 }
+
+/* Print Styles for PDF Generation */
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .sidebar, .pd-topbar, .pd-page-header, .toast-container {
+    display: none !important;
+  }
+  .main {
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+  .shell {
+    flex-direction: column !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .card, .saas-card, .stat-card, .rp-card {
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+    page-break-inside: avoid;
+  }
+  /* Force expand grids for print */
+  .dash-grid-2, .dash-grid-3, .ov-grid-2 {
+    display: block !important;
+  }
+  .dash-grid-2 > div, .dash-grid-3 > div, .ov-grid-2 > div {
+    margin-bottom: 20px;
+  }
+}

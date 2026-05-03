@@ -1498,24 +1498,50 @@ function showToast(message, type = 'success') {
 function filterData(btn, timeframe) {
   btn.parentElement.querySelectorAll('.pd-tab').forEach(t => t.classList.remove('pd-tab-active'));
   btn.classList.add('pd-tab-active');
-  showToast('Data filtered by: ' + timeframe, 'success');
+  showToast('Loading ' + timeframe + ' analytics...', 'info');
   
   const mainGrid = document.getElementById('pdGrid');
   if(mainGrid) {
-    mainGrid.style.opacity = '0.5';
+    mainGrid.style.opacity = '0.4';
     mainGrid.style.pointerEvents = 'none';
+    
     setTimeout(() => {
+      // Actually change the dashboard data based on timeframe
+      const portEl = document.getElementById('ovPortfolio');
+      const riskEl = document.getElementById('ovRiskScore');
+      const esgEl = document.getElementById('ovESG');
+      const highRiskEl = document.getElementById('ovHighRiskPct');
+      
+      if (timeframe === 'Today') {
+        if(portEl) portEl.textContent = '$1.11B';
+        if(riskEl) riskEl.textContent = '42';
+        if(esgEl) esgEl.textContent = '65.2';
+        if(highRiskEl) highRiskEl.textContent = '8.1%';
+      } else if (timeframe === 'This Week') {
+        if(portEl) portEl.textContent = '$1.13B';
+        if(riskEl) riskEl.textContent = '43';
+        if(esgEl) esgEl.textContent = '64.8';
+        if(highRiskEl) highRiskEl.textContent = '8.5%';
+      } else if (timeframe === 'This Month') {
+        if(portEl) portEl.textContent = '$1.15B';
+        if(riskEl) riskEl.textContent = '45';
+        if(esgEl) esgEl.textContent = '62.4';
+        if(highRiskEl) highRiskEl.textContent = '9.2%';
+      }
+
       mainGrid.style.opacity = '1';
       mainGrid.style.pointerEvents = 'auto';
-    }, 600);
+      showToast(timeframe + ' analytics loaded successfully', 'success');
+    }, 800);
   }
 }
 
 function generateReport() {
-  showToast('Generating Report PDF...', 'info');
+  showToast('Preparing PDF Report...', 'info');
   setTimeout(() => {
-    showToast('Report downloaded successfully!', 'success');
-  }, 1500);
+    window.print(); // Triggers the browser's native Save to PDF dialog
+    showToast('Report generated!', 'success');
+  }, 1000);
 }
 
 function readNotifications() {
