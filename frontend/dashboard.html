@@ -174,7 +174,7 @@ html, body {
   width: var(--right-w);
   flex-shrink: 0;
   padding: 28px 20px 28px 4px;
-  display: flex;
+  display: none; /* Hidden by default in new design */
   flex-direction: column;
   gap: 14px;
   overflow-y: auto;
@@ -1193,6 +1193,258 @@ body {
   .card, .stat-card { padding: 16px; }
   .stat-value { font-size: 20px; }
 }
+
+/* =============================== 
+   PROJECT DASHBOARD DESIGN 
+   =============================== */
+
+.pd-topbar {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0; margin-bottom:4px;
+}
+.pd-brand { display:flex; align-items:center; gap:8px; }
+.pd-logo { font-size:22px; font-weight:800; color:var(--text); }
+.pd-brand-text { font-size:16px; font-weight:700; color:var(--text); letter-spacing:-0.5px; }
+.pd-tabs-wrap {
+  display:flex; gap:4px; background:#F3F4F6; padding:4px; border-radius:24px;
+}
+.pd-tab {
+  padding:7px 18px; font-size:12px; font-weight:600; border-radius:20px;
+  border:none; background:transparent; color:var(--text-2); cursor:pointer;
+  font-family:var(--font); transition:var(--transition);
+}
+.pd-tab:hover { color:var(--text); }
+.pd-tab-active { background:var(--text); color:#fff !important; }
+.pd-topbar-actions { display:flex; align-items:center; gap:6px; }
+.pd-icon-btn {
+  width:36px; height:36px; border-radius:8px; border:1px solid #E5E7EB;
+  background:#fff; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; color:var(--text-2); transition:var(--transition);
+}
+.pd-icon-btn:hover { background:#F9FAFB; color:var(--text); border-color:#D1D5DB; }
+.pd-notif-dot {
+  position:absolute; top:7px; right:7px; width:7px; height:7px;
+  background:#EF4444; border-radius:50%; border:1.5px solid #fff;
+}
+.pd-user {
+  display:flex; align-items:center; gap:10px; margin-left:8px;
+  background:#fff; padding:5px 14px 5px 6px; border-radius:28px;
+  border:1px solid #E5E7EB; cursor:pointer;
+}
+.pd-avatar-circle {
+  width:32px; height:32px; border-radius:50%;
+  background:linear-gradient(135deg,#667eea,#764ba2);
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-size:11px; font-weight:700;
+}
+.pd-user-name { font-size:13px; font-weight:600; color:var(--text); }
+.pd-user-role { font-size:11px; color:var(--text-2); }
+
+/* Page Header */
+.pd-page-header {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:6px;
+}
+.pd-header-left { display:flex; align-items:center; gap:14px; }
+.pd-header-icon {
+  width:44px; height:44px; border-radius:12px; background:#F0F0F0;
+  display:flex; align-items:center; justify-content:center; color:var(--text-2);
+}
+.pd-header-sub { font-size:12px; color:var(--text-2); margin-bottom:2px; }
+.pd-header-title { font-size:24px; font-weight:800; color:var(--text); letter-spacing:-0.5px; margin:0; }
+.pd-search {
+  display:flex; align-items:center; gap:10px; background:#fff;
+  border:1px solid #E5E7EB; border-radius:12px; padding:10px 18px;
+  min-width:280px;
+}
+.pd-search input {
+  border:none; outline:none; font-family:var(--font); font-size:13px;
+  color:var(--text); background:transparent; width:100%;
+}
+.pd-search input::placeholder { color:#B0B8C4; }
+
+/* 3-Column Grid */
+.pd-grid {
+  display:grid;
+  grid-template-columns:280px 1fr 280px;
+  gap:16px;
+  min-height:0;
+}
+
+/* Cards */
+.pd-card {
+  background:#fff; border-radius:16px; padding:20px;
+  box-shadow:0 1px 3px rgba(0,0,0,0.06); transition:var(--transition);
+  min-width:0; position:relative; overflow:hidden;
+}
+.pd-card:hover { box-shadow:0 4px 12px rgba(0,0,0,0.08); }
+.pd-card-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.pd-card-title { font-size:15px; font-weight:700; color:var(--text); margin:0; }
+.pd-add-btn {
+  width:28px; height:28px; border-radius:8px; border:1px solid #E5E7EB;
+  background:#fff; font-size:16px; cursor:pointer; display:flex;
+  align-items:center; justify-content:center; color:var(--text-2); transition:var(--transition);
+}
+.pd-add-btn:hover { background:#F3F4F6; }
+
+/* Toggle Pills */
+.pd-pill-toggle { display:flex; gap:6px; margin-bottom:14px; }
+.pd-pill {
+  padding:6px 14px; font-size:11px; font-weight:600; border-radius:20px;
+  border:none; cursor:pointer; font-family:var(--font); transition:var(--transition);
+  background:#F3F4F6; color:var(--text-2);
+}
+.pd-pill-active { background:var(--text); color:#fff; }
+.pd-task-dropdown {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:8px 12px; background:#F9FAFB; border-radius:8px;
+  font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:14px;
+}
+
+/* Task Items */
+.pd-task-item {
+  display:flex; gap:12px; padding:14px 0; border-bottom:1px solid #F3F4F6;
+  align-items:flex-start; transition:var(--transition); cursor:pointer;
+}
+.pd-task-item:last-child { border-bottom:none; }
+.pd-task-item:hover { opacity:0.85; }
+.pd-task-dot {
+  width:36px; height:36px; border-radius:10px; display:flex;
+  align-items:center; justify-content:center; flex-shrink:0; font-size:16px;
+}
+.pd-task-dot.red { background:#FEE2E2; }
+.pd-task-dot.blue { background:#DBEAFE; }
+.pd-task-dot.purple { background:#EDE9FE; }
+.pd-task-dot.green { background:#D1FAE5; }
+.pd-task-name { font-size:13px; font-weight:700; color:var(--text); margin-bottom:3px; }
+.pd-task-desc { font-size:11px; color:var(--text-2); line-height:1.45; }
+
+/* Center column */
+.pd-col-center { display:flex; flex-direction:column; gap:16px; min-width:0; }
+.pd-center-top { display:grid; grid-template-columns:1fr 1fr; gap:16px; min-width:0; }
+
+/* Donut area */
+.pd-donut-wrap { height:180px; position:relative; margin:8px 0; min-width:0; }
+.pd-donut-legend {
+  display:flex; gap:16px; justify-content:center; font-size:11px;
+  color:var(--text-2); margin-top:8px;
+}
+.pd-donut-legend span { display:flex; align-items:center; gap:5px; }
+.pd-donut-legend .dot { width:8px; height:8px; border-radius:50%; }
+.pd-donut-footer { text-align:center; font-size:12px; color:var(--text-3); margin-top:4px; }
+
+/* Area chart */
+.pd-area-wrap { height:150px; position:relative; min-width:0; }
+.pd-area-legend {
+  display:flex; gap:14px; font-size:11px; color:var(--text-2); margin:6px 0 4px;
+}
+.pd-area-legend span { display:flex; align-items:center; gap:5px; font-weight:500; }
+
+/* Invoice / Risk Overview rows */
+.pd-invoice-row {
+  display:grid; grid-template-columns:120px 30px 110px 1fr;
+  align-items:center; gap:10px; padding:10px 0;
+  border-bottom:1px solid #F6F7F8; font-size:13px;
+}
+.pd-invoice-row:last-child { border-bottom:none; }
+.pd-invoice-label { font-weight:700; font-size:13px; }
+.pd-invoice-count { color:var(--text-2); font-weight:500; text-align:center; }
+.pd-invoice-amount { color:var(--text-2); font-weight:500; }
+.pd-invoice-bar {
+  height:8px; background:#F3F4F6; border-radius:4px; overflow:hidden;
+}
+.pd-invoice-bar > div {
+  height:100%; border-radius:4px;
+  transition:width 1s cubic-bezier(.4,0,.2,1);
+}
+
+/* Right column */
+.pd-col-right { display:flex; flex-direction:column; gap:16px; }
+
+/* Meeting items */
+.pd-meeting-item {
+  padding:12px 0; border-bottom:1px solid #F6F7F8;
+}
+.pd-meeting-item:last-child { border-bottom:none; }
+.pd-meeting-meta {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:4px;
+}
+.pd-meeting-type { font-size:11px; color:var(--text-3); }
+.pd-meeting-title { font-size:13px; font-weight:700; color:var(--text); }
+.pd-meeting-arrow { font-size:14px; color:var(--text-3); cursor:pointer; }
+.pd-meeting-bottom { display:flex; align-items:center; gap:10px; margin-top:4px; }
+.pd-meeting-time { font-size:12px; color:var(--text-2); font-weight:500; }
+.pd-meeting-tag {
+  font-size:10px; font-weight:600; padding:3px 10px; border-radius:20px;
+}
+.pd-tag-green { background:#D1FAE5; color:#059669; }
+.pd-tag-blue { background:#DBEAFE; color:#2563EB; }
+.pd-see-all {
+  font-size:12px; font-weight:600; color:var(--text-2); cursor:pointer;
+  margin-top:8px; display:flex; align-items:center; gap:4px;
+}
+.pd-see-all:hover { color:var(--text); }
+
+/* Ticket / Finding items */
+.pd-ticket-item {
+  display:flex; gap:12px; padding:12px 0;
+  border-bottom:1px solid #F6F7F8; align-items:flex-start;
+}
+.pd-ticket-item:last-child { border-bottom:none; }
+.pd-ticket-avatar {
+  width:36px; height:36px; border-radius:50%; display:flex;
+  align-items:center; justify-content:center; flex-shrink:0;
+  font-size:11px; font-weight:700; color:#fff;
+}
+.pd-ticket-name { font-size:13px; font-weight:700; color:var(--text); margin-bottom:2px; }
+.pd-ticket-desc { font-size:11px; color:var(--text-2); line-height:1.4; }
+.pd-ticket-link {
+  font-size:11px; font-weight:600; color:var(--text-2); cursor:pointer;
+  margin-top:4px; display:inline-block;
+}
+.pd-ticket-link:hover { color:var(--blue); }
+
+/* Simulation Expand Button */
+.pd-sim-toggle {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  padding:14px; background:#fff; border-radius:16px;
+  box-shadow:0 1px 3px rgba(0,0,0,0.06); cursor:pointer;
+  font-size:13px; font-weight:700; color:var(--text); transition:var(--transition);
+  border:1.5px dashed #E5E7EB;
+}
+.pd-sim-toggle:hover { border-color:#3B82F6; color:#3B82F6; background:#F8FAFF; }
+.pd-sim-section {
+  display:none; 
+  margin-top:10px;
+  flex-direction:column;
+  gap:20px;
+  min-width:0;
+}
+.pd-sim-section.open { display:flex; }
+
+/* Card header with actions */
+.pd-card-actions { display:flex; gap:4px; }
+.pd-card-icon-btn {
+  width:28px; height:28px; border-radius:6px; border:1px solid #E5E7EB;
+  background:#fff; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; color:var(--text-3); font-size:13px; transition:var(--transition);
+}
+.pd-card-icon-btn:hover { background:#F9FAFB; color:var(--text); }
+
+/* Responsive for PD layout */
+@media (max-width:1024px) {
+  .pd-grid { grid-template-columns:1fr; }
+  .pd-center-top { grid-template-columns:1fr; }
+  .pd-topbar { flex-wrap:wrap; gap:12px; }
+  .pd-tabs-wrap { order:3; width:100%; justify-content:center; }
+  .pd-search { min-width:unset; width:100%; }
+}
+@media (max-width:768px) {
+  .pd-page-header { flex-direction:column; align-items:flex-start; gap:12px; }
+  .pd-topbar-actions { flex-wrap:wrap; }
+  .pd-user { display:none; }
+}
 </style>
 </head>
 
@@ -1552,220 +1804,142 @@ body {
   </div>
 </div>
 
-<!-- ════ SECTION: SIMULATION (Monte Carlo) ═══════════════════════════ -->
+<!-- ════ SECTION: SIMULATION (Redesigned Dashboard) ═══════════════════ -->
 <div id="section-simulation" class="dash-section">
-  <!-- Header -->
-  <header class="header fade-up">
-    <div class="header-left">
-      <h1 id="greetingText">Good morning!</h1>
-      <p id="dateText">Loading date…</p>
-    </div>
-    <div class="header-actions">
-      <div class="header-btn" id="calendarBtn" onclick="toggleCalendar()" style="cursor:pointer">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      </div>
-      <div class="header-btn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      </div>
-      <div class="header-btn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-        <div class="badge"></div>
-      </div>
 
-    </div>
-  </header>
-
-      <!-- Stat Cards -->
-  <div class="stat-row">
-    <div class="stat-card fade-up fade-up-1">
-      <div class="stat-card-top">
-        <div class="stat-icon" style="background:#EFF6FF">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-        </div>
-        <div class="stat-menu">···</div>
-      </div>
-      <div>
-        <div class="stat-value" id="statInitial">$10,000</div>
-        <div class="stat-label">Initial investment</div>
-      </div>
-      <span class="delta neutral" id="statSimCount">— simulations</span>
-    </div>
-
-    <div class="stat-card fade-up fade-up-2">
-      <div class="stat-card-top">
-        <div class="stat-icon" style="background:#ECFDF5">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="1.8"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-        </div>
-        <div class="stat-menu">···</div>
-      </div>
-      <div>
-        <div class="stat-value" id="statMean">—</div>
-        <div class="stat-label">Mean portfolio value</div>
-      </div>
-      <span class="delta up" id="statMeanDelta">Run simulation</span>
-    </div>
-
-    <div class="stat-card fade-up fade-up-3">
-      <div class="stat-card-top">
-        <div class="stat-icon" style="background:#FEF2F2">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="1.8"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        </div>
-        <div class="stat-menu">···</div>
-      </div>
-      <div>
-        <div class="stat-value" id="statVaR">—</div>
-        <div class="stat-label">Value at Risk (95%)</div>
-      </div>
-      <span class="delta down" id="statVaRDelta">Run simulation</span>
-    </div>
-
-    <div class="stat-card fade-up fade-up-4">
-      <div class="stat-card-top">
-        <div class="stat-icon" style="background:#FFFBEB">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <div class="stat-menu">···</div>
-      </div>
-      <div>
-        <div class="stat-value" id="statProbProfit">—</div>
-        <div class="stat-label">Probability of profit</div>
-      </div>
-      <span class="delta neutral" id="statHorizon">—-year horizon</span>
-    </div>
+<!-- Top Bar -->
+<div class="pd-topbar fade-up">
+  <div class="pd-brand"><span class="pd-logo">◈</span><span class="pd-brand-text">FinRisk</span></div>
+  <div class="pd-tabs-wrap">
+    <button class="pd-tab" onclick="this.parentElement.querySelectorAll('.pd-tab').forEach(t=>t.classList.remove('pd-tab-active'));this.classList.add('pd-tab-active')">Today</button>
+    <button class="pd-tab" onclick="this.parentElement.querySelectorAll('.pd-tab').forEach(t=>t.classList.remove('pd-tab-active'));this.classList.add('pd-tab-active')">This Week</button>
+    <button class="pd-tab pd-tab-active" onclick="this.parentElement.querySelectorAll('.pd-tab').forEach(t=>t.classList.remove('pd-tab-active'));this.classList.add('pd-tab-active')">This Month</button>
+    <button class="pd-tab" onclick="this.parentElement.querySelectorAll('.pd-tab').forEach(t=>t.classList.remove('pd-tab-active'));this.classList.add('pd-tab-active')">Reports</button>
   </div>
+  <div class="pd-topbar-actions">
+    <button class="pd-icon-btn" id="calendarBtn" onclick="toggleCalendar()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button>
+    <button class="pd-icon-btn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></button>
+    <button class="pd-icon-btn" style="position:relative"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="pd-notif-dot"></span></button>
+    <button class="pd-icon-btn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    <div class="pd-user"><div class="pd-avatar-circle">VA</div><div><div class="pd-user-name">Vaibhav</div><div class="pd-user-role">Risk Analyst</div></div></div>
+  </div>
+</div>
 
-  <!-- Chart section -->
-  <div class="chart-section fade-up">
-    <!-- Main paths chart -->
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <div class="card-title">Simulation Paths</div>
-          <div class="card-subtitle" id="pathsSubtitle">Run simulation to view portfolio trajectories</div>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center;">
-          <div class="real-nominal-row" id="legendRow" style="display:none">
-            <div class="legend-dot"><span style="background:#111827"></span>Nominal</div>
-            <div class="legend-dot"><span style="background:#3B82F6;opacity:0.7"></span>P95</div>
-            <div class="legend-dot"><span style="background:#EF4444;opacity:0.7"></span>P5</div>
-          </div>
-          <div class="chart-tabs" style="margin-right:8px" id="viewModeTabs">
-            <button class="chart-tab active" id="view2dBtn" onclick="switchViewMode('2d')">2D</button>
-            <button class="chart-tab" id="view3dBtn" onclick="switchViewMode('3d')">3D Surface</button>
-          </div>
-          <div class="chart-tabs">
-            <button class="chart-tab active" onclick="switchPathTab('nominal',this)">Nominal</button>
-            <button class="chart-tab" onclick="switchPathTab('real',this)">Real (Inflation-adj.)</button>
-          </div>
-        </div>
-      </div>
-      <div class="chart-wrap">
-        <div class="empty-state" id="pathsEmpty">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          <p>Configure inputs and run simulation</p>
-        </div>
-        <canvas id="pathsChart" style="display:none"></canvas>
-        <div id="pathsChart3D" style="display:none; width:100%; height:100%;"></div>
-      </div>
-    </div>
+<!-- Page Header -->
+<div class="pd-page-header fade-up">
+  <div class="pd-header-left">
+    <div class="pd-header-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+    <div><div class="pd-header-sub" id="dateText">Manage and track your portfolio risks</div><h1 class="pd-header-title" id="greetingText">Risk Dashboard</h1></div>
+  </div>
+  <div class="pd-search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#9CA3AF" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Search Risk, Portfolio, Reports..."/></div>
+</div>
 
-    <!-- Percentile breakdown -->
-    <div class="percentile-card">
-      <div class="card-header" style="margin-bottom:12px">
-        <div class="card-title">Outcome Distribution</div>
-      </div>
-      <div id="percentileContent">
-        <div class="pct-row" style="opacity:0.4">
-          <div><div class="pct-label">Best Case (P95)</div></div>
-          <div class="pct-value">—</div>
-        </div>
-        <div class="pct-row" style="opacity:0.4;margin-top:8px">
-          <div><div class="pct-label">Upper Quartile (P75)</div></div>
-          <div class="pct-value">—</div>
-        </div>
-        <div class="pct-row" style="opacity:0.4;margin-top:8px">
-          <div><div class="pct-label">Median (P50)</div></div>
-          <div class="pct-value">—</div>
-        </div>
-        <div class="pct-row" style="opacity:0.4;margin-top:8px">
-          <div><div class="pct-label">Lower Quartile (P25)</div></div>
-          <div class="pct-value">—</div>
-        </div>
-        <div class="pct-row" style="opacity:0.4;margin-top:8px">
-          <div><div class="pct-label">Worst Case (P5)</div></div>
-          <div class="pct-value">—</div>
-        </div>
-      </div>
-      <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
-        <div style="font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:10px">PROB. OF PROFIT</div>
-        <div class="bar-track">
-          <div class="bar-fill" id="profitBar" style="width:0%;background:linear-gradient(90deg,#10B981,#3B82F6)"></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;margin-top:6px">
-          <span style="font-size:11px;color:var(--text-2)">Loss</span>
-          <span style="font-size:13px;font-weight:700;color:var(--text)" id="profitPct">—</span>
-          <span style="font-size:11px;color:var(--text-2)">Profit</span>
-        </div>
+<!-- 3-Column Grid -->
+<div class="pd-grid" id="pdGrid">
+
+  <!-- LEFT: Risk Alerts -->
+  <div class="pd-col-left">
+    <div class="pd-card">
+      <div class="pd-card-top"><h3 class="pd-card-title">Risk Alerts</h3><button class="pd-add-btn">+</button></div>
+      <div class="pd-pill-toggle"><button class="pd-pill pd-pill-active">Today</button><button class="pd-pill">Tomorrow</button></div>
+      <div class="pd-task-dropdown"><span>⚡ Active Alerts</span><span>▾</span></div>
+      <div id="pdTaskList">
+        <div class="pd-task-item"><div class="pd-task-dot red"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#DC2626" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg></div><div><div class="pd-task-name">Credit Score Alert</div><div class="pd-task-desc">Monitor portfolio credit risk threshold changes</div></div></div>
+        <div class="pd-task-item"><div class="pd-task-dot blue"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2563EB" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="pd-task-name">ESG Compliance</div><div class="pd-task-desc">Review sustainability metrics for Q4 reporting</div></div></div>
+        <div class="pd-task-item"><div class="pd-task-dot purple"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#7C3AED" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="pd-task-name">Portfolio Rebalance</div><div class="pd-task-desc">Quarterly portfolio rebalancing review pending</div></div></div>
+        <div class="pd-task-item"><div class="pd-task-dot green"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#059669" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div><div class="pd-task-name">Market Volatility</div><div class="pd-task-desc">Track market volatility index changes daily</div></div></div>
       </div>
     </div>
   </div>
 
-  <!-- Bottom section -->
-  <div class="bottom-section fade-up">
-    <!-- Histogram -->
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <div class="card-title">Final Value Distribution</div>
-          <div class="card-subtitle">Histogram of terminal portfolio values</div>
-        </div>
+  <!-- CENTER -->
+  <div class="pd-col-center">
+    <!-- Top: Donut + Area Chart -->
+    <div class="pd-center-top">
+      <div class="pd-card">
+        <div class="pd-card-top"><h3 class="pd-card-title">Portfolio Overview</h3><div class="pd-card-actions"><button class="pd-card-icon-btn">↗</button></div></div>
+        <div class="pd-donut-wrap"><canvas id="pdDonutChart"></canvas></div>
+        <div class="pd-donut-legend"><span><span class="dot" style="background:#F59E0B"></span> High Risk: <strong id="pdHighCount">14</strong></span><span><span class="dot" style="background:#10B981"></span> Low Risk: <strong id="pdLowCount">32</strong></span></div>
+        <div class="pd-donut-footer">Moderate: <strong id="pdModCount">64</strong></div>
       </div>
-      <div class="histogram-wrap">
-        <div class="empty-state" id="histEmpty">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          <p>Run simulation to see distribution</p>
-        </div>
-        <canvas id="histChart" style="display:none"></canvas>
+      <div class="pd-card">
+        <div class="pd-card-top"><h3 class="pd-card-title">Risk VS ESG</h3><div class="pd-card-actions"><button class="pd-card-icon-btn">⇅</button><button class="pd-card-icon-btn">↗</button></div></div>
+        <div class="pd-area-legend"><span><span class="dot" style="background:#3B82F6"></span> Risk Score: <strong id="pdRiskVal">24.6</strong></span><span><span class="dot" style="background:#10B981"></span> ESG Score: <strong id="pdEsgVal">53.2</strong></span></div>
+        <div class="pd-area-wrap"><canvas id="pdAreaChart"></canvas></div>
       </div>
     </div>
 
-    <!-- Risk Metrics -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">Risk Metrics</div>
-        <div style="font-size:11px;color:var(--text-2);padding:3px 8px;background:var(--bg);border-radius:20px">Nominal</div>
+    <!-- Bottom: Risk Score Overview -->
+    <div class="pd-card">
+      <div class="pd-card-top"><h3 class="pd-card-title">Risk Score Overview</h3><div class="pd-card-actions"><button class="pd-card-icon-btn">⇅</button><button class="pd-card-icon-btn">⋯</button></div></div>
+      <div id="pdInvoiceRows">
+        <div class="pd-invoice-row"><span class="pd-invoice-label" style="color:#DC2626">Critical</span><span class="pd-invoice-count" id="pdCritCnt">5</span><span class="pd-invoice-amount">Score 85.0+</span><div class="pd-invoice-bar"><div style="width:85%;background:#DC2626"></div></div></div>
+        <div class="pd-invoice-row"><span class="pd-invoice-label" style="color:#1E293B">High Risk</span><span class="pd-invoice-count" id="pdHighCnt2">5</span><span class="pd-invoice-amount">Score 70-85</span><div class="pd-invoice-bar"><div style="width:65%;background:#1E293B"></div></div></div>
+        <div class="pd-invoice-row"><span class="pd-invoice-label" style="color:#3B82F6">Moderate</span><span class="pd-invoice-count" id="pdModCnt2">5</span><span class="pd-invoice-amount">Score 50-70</span><div class="pd-invoice-bar"><div style="width:50%;background:#3B82F6"></div></div></div>
+        <div class="pd-invoice-row"><span class="pd-invoice-label" style="color:#10B981">Low Risk</span><span class="pd-invoice-count" id="pdLowCnt2">5</span><span class="pd-invoice-amount">Score 30-50</span><div class="pd-invoice-bar"><div style="width:100%;background:#10B981"></div></div></div>
+        <div class="pd-invoice-row"><span class="pd-invoice-label" style="color:#F59E0B">Under Review</span><span class="pd-invoice-count" id="pdRevCnt">5</span><span class="pd-invoice-amount">Score &lt;30</span><div class="pd-invoice-bar"><div style="width:30%;background:#F59E0B"></div></div></div>
       </div>
-      <table class="metrics-table" id="metricsTable">
-        <tr><td class="m-label">Mean final value</td><td class="m-value" id="mMean">—</td></tr>
-        <tr><td class="m-label">Median final value</td><td class="m-value" id="mMedian">—</td></tr>
-        <tr><td class="m-label">P5 (worst case)</td><td class="m-value" id="mP5">—</td></tr>
-        <tr><td class="m-label">P95 (best case)</td><td class="m-value" id="mP95">—</td></tr>
-        <tr><td class="m-label">Standard deviation</td><td class="m-value" id="mStd">—</td></tr>
-        <tr><td class="m-label">Probability of loss</td><td class="m-value" id="mProbLoss">—</td></tr>
-        <tr><td class="m-label">Value at Risk (95%)</td><td class="m-value" id="mVaR">—</td></tr>
-        <tr><td class="m-label">Real mean (infl.-adj.)</td><td class="m-value" id="mRealMean">—</td></tr>
-        <tr><td class="m-label">Real P5</td><td class="m-value" id="mRealP5">—</td></tr>
-      </table>
+    </div>
+
+    <!-- Simulation Toggle -->
+    <div class="pd-sim-toggle" onclick="toggleSimSection()">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      Open Monte Carlo Simulation Lab
     </div>
   </div>
 
-  <!-- Scenario Comparison (shown after scenario B is run) -->
-  <div class="compare-section fade-up" id="compareSection">
-    <div class="compare-card a-card">
-      <div style="margin-bottom:12px"><span class="scenario-label label-a">Scenario A</span></div>
-      <div class="card-title" style="margin-bottom:14px">Scenario A Results</div>
-      <table class="metrics-table" id="compareTableA"></table>
+  <!-- RIGHT: Reviews + Findings -->
+  <div class="pd-col-right">
+    <div class="pd-card">
+      <div class="pd-card-top"><h3 class="pd-card-title">Scheduled Reviews</h3><div class="pd-card-actions"><button class="pd-card-icon-btn">📋</button></div></div>
+      <div class="pd-meeting-item"><div class="pd-meeting-meta"><span class="pd-meeting-type">Risk Review</span><span class="pd-meeting-title">Portfolio Audit</span><span class="pd-meeting-arrow">↗</span></div><div class="pd-meeting-bottom"><span class="pd-meeting-time">2:30 PM</span><span class="pd-meeting-tag pd-tag-green">Risk Team</span></div></div>
+      <div class="pd-meeting-item"><div class="pd-meeting-meta"><span class="pd-meeting-type">ESG Review</span><span class="pd-meeting-title">ESG Compliance</span><span class="pd-meeting-arrow">↗</span></div><div class="pd-meeting-bottom"><span class="pd-meeting-time">4:15 PM</span><span class="pd-meeting-tag pd-tag-blue">Compliance</span></div></div>
+      <div class="pd-see-all" onclick="switchSection('overview',document.querySelectorAll('.nav-item')[4])">See All Reviews ›</div>
     </div>
-    <div class="compare-card b-card">
-      <div style="margin-bottom:12px"><span class="scenario-label label-b">Scenario B</span></div>
-      <div class="card-title" style="margin-bottom:14px">Scenario B Results</div>
-      <table class="metrics-table" id="compareTableB"></table>
+    <div class="pd-card">
+      <div class="pd-card-top"><h3 class="pd-card-title">Recent Findings</h3><div class="pd-card-actions"><button class="pd-card-icon-btn">🔄</button></div></div>
+      <div id="pdFindings">
+        <div class="pd-ticket-item"><div class="pd-ticket-avatar" style="background:linear-gradient(135deg,#F59E0B,#EF4444)">AI</div><div><div class="pd-ticket-name">AI Model Alert</div><div class="pd-ticket-desc">Credit risk model detected high-risk pattern changes</div><span class="pd-ticket-link" onclick="switchSection('credit',document.querySelectorAll('.nav-item')[1])">Check ›</span></div></div>
+        <div class="pd-ticket-item"><div class="pd-ticket-avatar" style="background:linear-gradient(135deg,#10B981,#3B82F6)">ES</div><div><div class="pd-ticket-name">ESG Score Update</div><div class="pd-ticket-desc">Environment pillar improved by 2.3 points this quarter</div><span class="pd-ticket-link" onclick="switchSection('esg',document.querySelectorAll('.nav-item')[2])">Check ›</span></div></div>
+        <div class="pd-ticket-item"><div class="pd-ticket-avatar" style="background:linear-gradient(135deg,#7C3AED,#EC4899)">CL</div><div><div class="pd-ticket-name">Cluster Shift</div><div class="pd-ticket-desc">2 entities moved from low-risk to moderate-risk cluster</div><span class="pd-ticket-link" onclick="switchSection('clustering',document.querySelectorAll('.nav-item')[3])">Check ›</span></div></div>
+      </div>
     </div>
   </div>
 
+</div><!-- /pd-grid -->
 
-  
+<!-- Hidden Simulation Section (Full Width) -->
+<div class="pd-sim-section" id="pdSimSection">
+  <div class="card-header" style="margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button onclick="toggleSimSection()" style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:8px 12px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:6px;transition:all 0.2s;">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Back to Dashboard
+      </button>
+      <div>
+        <div class="card-title">Monte Carlo Simulation Lab</div>
+        <div class="card-subtitle">Run multi-scenario simulations and risk analysis</div>
+      </div>
+    </div>
+  </div>
+      <div class="stat-row">
+        <div class="stat-card fade-up fade-up-1"><div class="stat-card-top"><div class="stat-icon" style="background:#EFF6FF"><svg viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div></div><div><div class="stat-value" id="statInitial">$10,000</div><div class="stat-label">Initial investment</div></div><span class="delta neutral" id="statSimCount">— simulations</span></div>
+        <div class="stat-card fade-up fade-up-2"><div class="stat-card-top"><div class="stat-icon" style="background:#ECFDF5"><svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="1.8"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div></div><div><div class="stat-value" id="statMean">—</div><div class="stat-label">Mean portfolio value</div></div><span class="delta up" id="statMeanDelta">Run simulation</span></div>
+        <div class="stat-card fade-up fade-up-3"><div class="stat-card-top"><div class="stat-icon" style="background:#FEF2F2"><svg viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="1.8"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div></div><div><div class="stat-value" id="statVaR">—</div><div class="stat-label">Value at Risk (95%)</div></div><span class="delta down" id="statVaRDelta">Run simulation</span></div>
+        <div class="stat-card fade-up fade-up-4"><div class="stat-card-top"><div class="stat-icon" style="background:#FFFBEB"><svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div></div><div><div class="stat-value" id="statProbProfit">—</div><div class="stat-label">Probability of profit</div></div><span class="delta neutral" id="statHorizon">—-year horizon</span></div>
+      </div>
+      <div class="chart-section fade-up">
+        <div class="card"><div class="card-header"><div><div class="card-title">Simulation Paths</div><div class="card-subtitle" id="pathsSubtitle">Run simulation to view portfolio trajectories</div></div><div style="display:flex;gap:8px;align-items:center;"><div class="real-nominal-row" id="legendRow" style="display:none"><div class="legend-dot"><span style="background:#111827"></span>Nominal</div><div class="legend-dot"><span style="background:#3B82F6;opacity:0.7"></span>P95</div><div class="legend-dot"><span style="background:#EF4444;opacity:0.7"></span>P5</div></div><div class="chart-tabs" style="margin-right:8px" id="viewModeTabs"><button class="chart-tab active" id="view2dBtn" onclick="switchViewMode('2d')">2D</button><button class="chart-tab" id="view3dBtn" onclick="switchViewMode('3d')">3D Surface</button></div><div class="chart-tabs"><button class="chart-tab active" onclick="switchPathTab('nominal',this)">Nominal</button><button class="chart-tab" onclick="switchPathTab('real',this)">Real (Inflation-adj.)</button></div></div></div><div class="chart-wrap"><div class="empty-state" id="pathsEmpty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><p>Configure inputs and run simulation</p></div><canvas id="pathsChart" style="display:none"></canvas><div id="pathsChart3D" style="display:none;width:100%;height:100%"></div></div></div>
+        <div class="percentile-card"><div class="card-header" style="margin-bottom:12px"><div class="card-title">Outcome Distribution</div></div><div id="percentileContent"><div class="pct-row" style="opacity:0.4"><div><div class="pct-label">Best Case (P95)</div></div><div class="pct-value">—</div></div><div class="pct-row" style="opacity:0.4;margin-top:8px"><div><div class="pct-label">Upper Quartile (P75)</div></div><div class="pct-value">—</div></div><div class="pct-row" style="opacity:0.4;margin-top:8px"><div><div class="pct-label">Median (P50)</div></div><div class="pct-value">—</div></div><div class="pct-row" style="opacity:0.4;margin-top:8px"><div><div class="pct-label">Lower Quartile (P25)</div></div><div class="pct-value">—</div></div><div class="pct-row" style="opacity:0.4;margin-top:8px"><div><div class="pct-label">Worst Case (P5)</div></div><div class="pct-value">—</div></div></div><div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)"><div style="font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:10px">PROB. OF PROFIT</div><div class="bar-track"><div class="bar-fill" id="profitBar" style="width:0%;background:linear-gradient(90deg,#10B981,#3B82F6)"></div></div><div style="display:flex;justify-content:space-between;margin-top:6px"><span style="font-size:11px;color:var(--text-2)">Loss</span><span style="font-size:13px;font-weight:700;color:var(--text)" id="profitPct">—</span><span style="font-size:11px;color:var(--text-2)">Profit</span></div></div></div>
+      </div>
+      <div class="bottom-section fade-up">
+        <div class="card"><div class="card-header"><div><div class="card-title">Final Value Distribution</div><div class="card-subtitle">Histogram of terminal portfolio values</div></div></div><div class="histogram-wrap"><div class="empty-state" id="histEmpty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><p>Run simulation to see distribution</p></div><canvas id="histChart" style="display:none"></canvas></div></div>
+        <div class="card"><div class="card-header"><div class="card-title">Risk Metrics</div><div style="font-size:11px;color:var(--text-2);padding:3px 8px;background:var(--bg);border-radius:20px">Nominal</div></div><table class="metrics-table" id="metricsTable"><tr><td class="m-label">Mean final value</td><td class="m-value" id="mMean">—</td></tr><tr><td class="m-label">Median final value</td><td class="m-value" id="mMedian">—</td></tr><tr><td class="m-label">P5 (worst case)</td><td class="m-value" id="mP5">—</td></tr><tr><td class="m-label">P95 (best case)</td><td class="m-value" id="mP95">—</td></tr><tr><td class="m-label">Standard deviation</td><td class="m-value" id="mStd">—</td></tr><tr><td class="m-label">Probability of loss</td><td class="m-value" id="mProbLoss">—</td></tr><tr><td class="m-label">Value at Risk (95%)</td><td class="m-value" id="mVaR">—</td></tr><tr><td class="m-label">Real mean (infl.-adj.)</td><td class="m-value" id="mRealMean">—</td></tr><tr><td class="m-label">Real P5</td><td class="m-value" id="mRealP5">—</td></tr></table></div>
+      </div>
+      <div class="compare-section fade-up" id="compareSection"><div class="compare-card a-card"><div style="margin-bottom:12px"><span class="scenario-label label-a">Scenario A</span></div><div class="card-title" style="margin-bottom:14px">Scenario A Results</div><table class="metrics-table" id="compareTableA"></table></div><div class="compare-card b-card"><div style="margin-bottom:12px"><span class="scenario-label label-b">Scenario B</span></div><div class="card-title" style="margin-bottom:14px">Scenario B Results</div><table class="metrics-table" id="compareTableB"></table></div></div>
+    </div>
+    </div>
 </div><!-- /section-simulation -->
+
 
 <!-- SECTION: SETTINGS -->
 <div id="section-settings" class="dash-section" style="display:none;">
@@ -2027,7 +2201,7 @@ function switchSection(id, navEl) {
 
   // Show/hide right panel (only for Monte Carlo)
   var rp = document.querySelector('.right-panel');
-  if (rp) rp.style.display = (id === 'simulation') ? '' : 'none';
+  if (rp) rp.style.display = (id === 'simulation' && document.getElementById('pdSimSection') && document.getElementById('pdSimSection').classList.contains('open')) ? '' : 'none';
 
   // Re-render section data on switch
   if (typeof DASHBOARD_DATA !== 'undefined') renderSectionData(id);
@@ -2451,10 +2625,9 @@ let lastResultB    = null;
 // ─── Greeting & Date ─────────────────────────────────────────────────────────
 (function initDateTime() {
   const now = new Date();
-  const hr  = now.getHours();
-  const greet = hr < 12 ? "Good morning" : hr < 17 ? "Good afternoon" : "Good evening";
-  document.getElementById("greetingText").textContent = `${greet}!`;
-  document.getElementById("dateText").textContent =
+  // Only update the date subtitle, keep "Risk Dashboard" as the main title
+  var dateEl = document.getElementById("dateText");
+  if (dateEl) dateEl.textContent =
     now.toLocaleDateString("en-US", { weekday:"long", year:"numeric", month:"long", day:"numeric" });
 })();
 
@@ -3211,7 +3384,7 @@ function applyOverviewFilters() {
   renderRiskyTable(filtered);
 }
 // ─── Auto-run on page load ────────────────────────────────────────────────────
-window.addEventListener("load", () => setTimeout(()=>runSimulation("A"), 400));
+// Auto-run removed — simulation starts when user opens Sim Lab
 
 // ─── Navigation ───────────────────────────────────────────────────────────────
 function goHome() {
@@ -3304,12 +3477,8 @@ function selectCalDay(y, m, d, isOtherMonth) {
   if (el) el.textContent = dateStr;
 
   // Update greeting based on selected date
-  var hour = 10; // default daytime
   var greetEl = document.getElementById('greetingText');
-  if (greetEl) {
-    var dayOfWeek = _calSelected.toLocaleDateString('en-US', { weekday: 'long' });
-    greetEl.textContent = 'Good morning!';
-  }
+  // (Removed greeting overwrite to preserve 'Risk Dashboard' title)
 
   // Also update the overview date if present
   var ovDateEl = document.getElementById('ovDate');
@@ -3382,6 +3551,113 @@ function applyDateDataShift(selectedDate) {
     }
   });
 }
+
+// ─── Project Dashboard Cards (from DASHBOARD_DATA) ──────────────────────
+function toggleSimSection() {
+  var sec = document.getElementById('pdSimSection');
+  var grid = document.getElementById('pdGrid');
+  var rp = document.querySelector('.right-panel');
+  if (!sec) return;
+  
+  var isOpen = sec.classList.contains('open');
+  if (isOpen) {
+    // Closing
+    sec.classList.remove('open');
+    if (grid) grid.style.display = 'grid';
+    if (rp) rp.style.display = 'none';
+  } else {
+    // Opening
+    sec.classList.add('open');
+    if (grid) grid.style.display = 'none';
+    if (rp) rp.style.display = 'flex';
+    // Auto-run simulation if not already run
+    if (!lastResultA) setTimeout(function(){ runSimulation('A'); }, 300);
+  }
+}
+
+function renderPDCards() {
+  var D = (typeof DASHBOARD_DATA !== 'undefined') ? DASHBOARD_DATA : {};
+  
+  // Portfolio Overview Donut
+  var highR = 0, modR = 0, lowR = 0;
+  if (D.risk_distribution) {
+    highR = D.risk_distribution.high;
+    modR = D.risk_distribution.medium;
+    lowR = D.risk_distribution.low;
+  } else if (D.risky_entities) {
+    D.risky_entities.forEach(function(e) {
+      if (e.label === 'High') highR++;
+      else if (e.label === 'Medium') modR++;
+      else lowR++;
+    });
+  } else {
+    highR = 14; modR = 64; lowR = 32;
+  }
+  setText('pdHighCount', highR);
+  setText('pdModCount', modR);
+  setText('pdLowCount', lowR);
+  
+  var ctx = document.getElementById('pdDonutChart');
+  if (ctx) new Chart(ctx, {
+    type:'doughnut',
+    data:{labels:['High Risk','Moderate','Low Risk'],datasets:[{data:[highR,modR,lowR],backgroundColor:['#F59E0B','#3B82F6','#10B981'],borderWidth:0,hoverOffset:6}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{display:false}}}
+  });
+  
+  // Risk vs ESG Area Chart
+  var riskLabels = ['Jan','Feb','Mar','Apr','May','Jun'];
+  var riskData = [20,22,19,24,21,23];
+  var esgData = [45,48,50,52,53,55];
+  if (D.risk_timeseries) { riskLabels = D.risk_timeseries.labels; riskData = D.risk_timeseries.values; }
+  if (D.esg_trend) { esgData = D.esg_trend.data; riskLabels = D.esg_trend.labels; }
+  if (D.ai_risk_score) setText('pdRiskVal', D.ai_risk_score);
+  if (D.avg_esg) setText('pdEsgVal', D.avg_esg);
+  
+  var ctx2 = document.getElementById('pdAreaChart');
+  if (ctx2) new Chart(ctx2, {
+    type:'line',
+    data:{labels:riskLabels,datasets:[
+      {label:'Risk',data:riskData,borderColor:'#3B82F6',backgroundColor:'rgba(59,130,246,0.08)',borderWidth:2,pointRadius:3,pointBackgroundColor:'#fff',pointBorderColor:'#3B82F6',fill:true,tension:0.4},
+      {label:'ESG',data:esgData,borderColor:'#10B981',backgroundColor:'rgba(16,185,129,0.08)',borderWidth:2,pointRadius:3,pointBackgroundColor:'#fff',pointBorderColor:'#10B981',fill:true,tension:0.4}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{grid:{color:'rgba(0,0,0,0.04)'},beginAtZero:true}}}
+  });
+  
+  // Risk Score Overview bars (from risky_entities)
+  if (D.risky_entities) {
+    var crit=0,high=0,mod=0,low=0,rev=0;
+    D.risky_entities.forEach(function(e){
+      var s = e.risk_score;
+      if(s>=85) crit++;
+      else if(s>=70) high++;
+      else if(s>=50) mod++;
+      else if(s>=30) low++;
+      else rev++;
+    });
+    var total = D.risky_entities.length || 1;
+    setText('pdCritCnt',crit); setText('pdHighCnt2',high); setText('pdModCnt2',mod); setText('pdLowCnt2',low); setText('pdRevCnt',rev);
+    // Update bar widths
+    var rows = document.querySelectorAll('.pd-invoice-bar > div');
+    if(rows.length>=5){
+      rows[0].style.width=(crit/total*100)+'%';
+      rows[1].style.width=(high/total*100)+'%';
+      rows[2].style.width=(mod/total*100)+'%';
+      rows[3].style.width=(low/total*100)+'%';
+      rows[4].style.width=(rev/total*100)+'%';
+    }
+  }
+  
+  // Update date
+  var now = new Date();
+  var dateEl = document.getElementById('dateText');
+  if (dateEl) dateEl.textContent = now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+}
+
+// Initialize PD cards on load
+window.addEventListener('load', function() {
+  setTimeout(renderPDCards, 200);
+});
+
 </script>
 
 <!-- Calendar Popup (at body level to escape overflow:hidden stacking) -->
